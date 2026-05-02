@@ -4,9 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Ndax | An All-In-One Crypto Trading Platform</title>
+    <title>Prime Trade Access | An All-In-One Crypto Trading Platform</title>
     <meta name="description"
-        content="Trade Bitcoin, Ethereum, and more on Ndax. Enjoy secure, simple trading and asset management.">
+        content="Trade Bitcoin, Ethereum, and more on Prime Trade Access. Enjoy secure, simple trading and asset management.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
@@ -1244,8 +1244,8 @@
 <body>
     <!-- Alert Bar -->
     <div class="alert-bar" id="alertBar">
-        <p>Alert: Protect Your Account – Ndax will never contact you to request funds, passwords, or personal
-            information. Contact Ndax Support directly if y...</p>
+        <p>Alert: Protect Your Account – Prime Trade Access will never contact you to request funds, passwords, or personal
+            information. Contact Prime Trade Access Support directly if y...</p>
         <button class="dismiss-btn"
             onclick="document.getElementById('alertBar').classList.add('hidden')">Dismiss</button>
     </div>
@@ -1255,14 +1255,14 @@
         <div class="nav-left">
             <div class="logo-area">
                 <div class="logo-icon">
-                    <!-- Ndax Logo SVG -->
+                    <!-- Prime Trade Access Logo SVG -->
                     <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
                         <rect x="2" y="8" width="10" height="16" rx="1" fill="#C8F524" />
                         <rect x="8" y="4" width="10" height="16" rx="1" fill="#8BC34A" transform="rotate(10 8 4)" />
                         <rect x="14" y="10" width="8" height="14" rx="1" fill="#4CAF50" transform="rotate(-5 14 10)" />
                     </svg>
                 </div>
-                <span class="logo-text">Ndax</span>
+                <span class="logo-text">Prime Trade Access</span>
                 <div class="logo-divider"></div>
                 <div class="partner-badge">
                     <div class="shield-icon">
@@ -1284,16 +1284,8 @@
         </div>
         <div class="nav-right">
             <div class="nav-auth-links">
-                @if (Route::has('login'))
-                    @auth
-                        <a href="{{ url('/dashboard') }}" class="login-link">Dashboard</a>
-                    @else
-                        <a href="{{ route('login') }}" class="login-link">Login</a>
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="signup-link">Sign Up</a>
-                        @endif
-                    @endauth
-                @endif
+                <a href="/login" class="login-link">Login</a>
+                <a href="/register" class="signup-link">Register</a>
             </div>
             <button class="icon-btn download-btn" aria-label="Download app">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -1323,16 +1315,8 @@
         <a href="#">Learn <span class="chevron">▾</span></a>
         <a href="#">Company <span class="chevron">▾</span></a>
         <div class="mobile-auth">
-            @if (Route::has('login'))
-                @auth
-                    <a href="{{ url('/dashboard') }}" class="m-login">Dashboard</a>
-                @else
-                    <a href="{{ route('login') }}" class="m-login">Login</a>
-                    @if (Route::has('register'))
-                        <a href="{{ route('register') }}" class="m-signup">Sign Up</a>
-                    @endif
-                @endauth
-            @endif
+            <a href="/login" class="m-login">Login</a>
+            <a href="/register" class="m-signup">Register</a>
         </div>
     </div>
 
@@ -1345,7 +1329,7 @@
         <div class="hero-content">
             <div class="hero-text">
                 <h1>Trust Is The<br>New Currency</h1>
-                <p>Stepping into the future shouldn't require a leap of faith. Ndax has the experience and expertise to
+                <p>Stepping into the future shouldn't require a leap of faith. Prime Trade Access has the experience and expertise to
                     guide you every step of the way and the track record to back it up.</p>
                 <a href="#" class="hero-cta">Get Started</a>
             </div>
@@ -1538,7 +1522,7 @@
             <div class="tab-content" id="feat-invest">
                 <div class="tab-text">
                     <h3>Auto Invest</h3>
-                    <p>Automate your crypto purchases with Ndax's Auto Invest. Utilize Dollar-Cost Averaging (DCA) and
+                    <p>Automate your crypto purchases with Prime Trade Access' Auto Invest. Utilize Dollar-Cost Averaging (DCA) and
                         scheduled purchases to diversify your portfolio effortlessly.</p>
                     <a href="#" class="btn-lime">Learn More →</a>
                 </div>
@@ -1547,7 +1531,7 @@
             <div class="tab-content" id="feat-orders">
                 <div class="tab-text">
                     <h3>Advanced Order Types</h3>
-                    <p>Optimize your trades with Ndax's advanced order types, including limit orders, stop orders,
+                    <p>Optimize your trades with Prime Trade Access' advanced order types, including limit orders, stop orders,
                         trailing stop orders, fill or kill orders and more.</p>
                     <a href="#" class="btn-lime">Learn More →</a>
                 </div>
@@ -1557,7 +1541,7 @@
                 <div class="tab-text">
                     <h3>Affiliate Rewards</h3>
                     <p>Earn rewards through our affiliate program by sharing your unique link and inviting others to
-                        join Ndax. Receive bonuses for each qualifying referral.</p>
+                        join Prime Trade Access. Receive bonuses for each qualifying referral.</p>
                     <a href="#" class="btn-lime">Learn More →</a>
                 </div>
                 <div class="tab-image"><span class="tab-image-placeholder">🎁</span></div>
@@ -1565,7 +1549,7 @@
             <div class="tab-content" id="feat-address">
                 <div class="tab-text">
                     <h3>Address Book</h3>
-                    <p>Effortlessly manage crypto transactions with Ndax's Address Book: store addresses, execute
+                    <p>Effortlessly manage crypto transactions with Prime Trade Access' Address Book: store addresses, execute
                         withdrawals directly, enhance security with whitelisting, and access comprehensive transaction
                         histories.</p>
                     <a href="#" class="btn-lime">Learn More →</a>
@@ -1575,7 +1559,7 @@
             <div class="tab-content" id="feat-tax">
                 <div class="tab-text">
                     <h3>Tax Reporting</h3>
-                    <p>Ndax makes tax reporting easy with comprehensive reports and tax software integration, helping
+                    <p>Prime Trade Access makes tax reporting easy with comprehensive reports and tax software integration, helping
                         you file your crypto taxes effortlessly.</p>
                     <a href="#" class="btn-lime">Learn More →</a>
                 </div>
@@ -1592,7 +1576,7 @@
             <div class="testimonial-grid">
                 <div class="testimonial-card">
                     <div class="stars">★★★★★</div>
-                    <div class="testimonial-text">I have been using NDAX for 3+ years and have had nothing but great
+                    <div class="testimonial-text">I have been using Prime Trade Access for 3+ years and have had nothing but great
                         experiences! I trust them with all my crypto needs and appreciate all they do to give access to
                         the vast majority of legitimate cryptocurrencies...</div>
                     <div class="testimonial-author">
@@ -1602,7 +1586,7 @@
                 </div>
                 <div class="testimonial-card">
                     <div class="stars">★★★★★</div>
-                    <div class="testimonial-text">There are only a couple of good Canadian exchanges in my opinion. NDAX
+                    <div class="testimonial-text">There are only a couple of good Canadian exchanges in my opinion. Prime Trade Access
                         is pretty much at the top of my list, and I have tried all Canadian exchanges. Spreads are good,
                         fees are competitive...</div>
                     <div class="testimonial-author">
@@ -1643,7 +1627,7 @@
             <div class="tab-content active" id="biz-treasury">
                 <div class="tab-text">
                     <h3>Treasury Service</h3>
-                    <p>Ndax's Treasury Service provides businesses a secure environment for managing cryptocurrencies,
+                    <p>Prime Trade Access' Treasury Service provides businesses a secure environment for managing cryptocurrencies,
                         offering custody, trading, and staking within a robust security framework.</p>
                     <a href="#" class="btn-lime">Learn More →</a>
                 </div>
@@ -1652,7 +1636,7 @@
             <div class="tab-content" id="biz-institutional">
                 <div class="tab-text">
                     <h3>Institutional Solutions</h3>
-                    <p>Explore digital assets and Web3 products with Ndax's institutional solutions, allowing you to
+                    <p>Explore digital assets and Web3 products with Prime Trade Access' institutional solutions, allowing you to
                         integrate digital assets into your product offering seamlessly.</p>
                     <a href="#" class="btn-lime">Learn More →</a>
                 </div>
@@ -1661,7 +1645,7 @@
             <div class="tab-content" id="biz-liquidity">
                 <div class="tab-text">
                     <h3>Liquidity Provider</h3>
-                    <p>Ndax offers businesses access to extensive liquidity pools, competitive spreads, and low trading
+                    <p>Prime Trade Access offers businesses access to extensive liquidity pools, competitive spreads, and low trading
                         fees, enhancing the efficiency of high-volume cryptocurrency transactions.</p>
                     <a href="#" class="btn-lime">Learn More →</a>
                 </div>
@@ -1670,7 +1654,7 @@
             <div class="tab-content" id="biz-whitelabel">
                 <div class="tab-text">
                     <h3>White Label Trade Platform</h3>
-                    <p>Empower your business with Ndax's plug-and-play white-label trading platform, providing
+                    <p>Empower your business with Prime Trade Access' plug-and-play white-label trading platform, providing
                         comprehensive solutions for acquiring cryptocurrency.</p>
                     <a href="#" class="btn-lime">Learn More →</a>
                 </div>
@@ -1679,7 +1663,7 @@
             <div class="tab-content" id="biz-mining">
                 <div class="tab-text">
                     <h3>Crypto Mining</h3>
-                    <p>Ndax offers crypto miners access to deep liquidity pools, robust security, and comprehensive
+                    <p>Prime Trade Access offers crypto miners access to deep liquidity pools, robust security, and comprehensive
                         solutions to streamline operations.</p>
                     <a href="#" class="btn-lime">Learn More →</a>
                 </div>
@@ -1688,7 +1672,7 @@
             <div class="tab-content" id="biz-otc">
                 <div class="tab-text">
                     <h3>Over The Counter Desk</h3>
-                    <p>Ndax's Over-The-Counter (OTC) Trading Desk provides high-net-worth clients with personalized and
+                    <p>Prime Trade Access' Over-The-Counter (OTC) Trading Desk provides high-net-worth clients with personalized and
                         secure trading, access to deep liquidity, and a wide selection of digital assets.</p>
                     <a href="#" class="btn-lime">Learn More →</a>
                 </div>
@@ -1697,7 +1681,7 @@
             <div class="tab-content" id="biz-referrals">
                 <div class="tab-text">
                     <h3>Referrals</h3>
-                    <p>Introduce businesses to Ndax's services and earn rewards for every successful referral.</p>
+                    <p>Introduce businesses to Prime Trade Access' services and earn rewards for every successful referral.</p>
                     <a href="#" class="btn-lime">Learn More →</a>
                 </div>
                 <div class="tab-image"><span class="tab-image-placeholder">🔗</span></div>
@@ -1705,7 +1689,7 @@
             <div class="tab-content" id="biz-finance">
                 <div class="tab-text">
                     <h3>Financial Institutions</h3>
-                    <p>Ndax empowers financial institutions with a secure framework for integrating digital currencies,
+                    <p>Prime Trade Access empowers financial institutions with a secure framework for integrating digital currencies,
                         offering innovative solutions to expand their service offerings.</p>
                     <a href="#" class="btn-lime">Learn More →</a>
                 </div>
@@ -1740,14 +1724,14 @@
                 <div class="blog-card">
                     <div class="blog-thumb"></div>
                     <div class="blog-body">
-                        <h3>Ndax Ice Playoffs Are Here! Make Picks. Climb the Leaderboard. Win Bigger.</h3>
+                        <h3>Prime Trade Access Ice Playoffs Are Here! Make Picks. Climb the Leaderboard. Win Bigger.</h3>
                         <a href="#" class="read-link">Read Article →</a>
                     </div>
                 </div>
                 <div class="blog-card">
                     <div class="blog-thumb" style="background: linear-gradient(135deg, #1a2040, #162e3e);"></div>
                     <div class="blog-body">
-                        <h3>Staking on Ndax: How You Could Earn Rewards in a Volatile Market</h3>
+                        <h3>Staking on Prime Trade Access: How You Could Earn Rewards in a Volatile Market</h3>
                         <a href="#" class="read-link">Read Article →</a>
                     </div>
                 </div>
@@ -1767,8 +1751,8 @@
         <div class="footer-inner">
             <div class="footer-grid">
                 <div class="footer-brand">
-                    <div class="footer-logo">Ndax</div>
-                    <p>Trade Bitcoin, Ethereum, and more on Ndax. Enjoy secure, simple trading and asset management.</p>
+                    <div class="footer-logo">Prime Trade Access</div>
+                    <p>Trade Bitcoin, Ethereum, and more on Prime Trade Access. Enjoy secure, simple trading and asset management.</p>
                 </div>
                 <div class="footer-col">
                     <h4>Products</h4>
@@ -1802,7 +1786,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; {{ date('Y') }} Ndax. All rights reserved.</p>
+                <p>&copy; {{ date('Y') }} Prime Trade Access. All rights reserved.</p>
                 <div class="footer-socials">
                     <a href="#" aria-label="Twitter">𝕏</a>
                     <a href="#" aria-label="LinkedIn">in</a>
