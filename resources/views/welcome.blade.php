@@ -261,40 +261,57 @@
             position: absolute;
             inset: 0;
             z-index: 0;
-            background: var(--ndax-hero-bg);
+            background: #0d0f1a;
         }
 
+        /* Large purple/blue blob — upper right */
         .hero-bg::before {
             content: '';
             position: absolute;
-            top: -20%;
-            right: -10%;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(80, 60, 220, 0.4) 0%, transparent 70%);
+            top: -30%;
+            right: -15%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(70, 50, 220, 0.55) 0%, rgba(50, 30, 180, 0.3) 40%, transparent 70%);
             border-radius: 50%;
+            animation: blobDrift 18s ease-in-out infinite alternate;
         }
 
+        /* Smaller blue accent blob — mid-right */
         .hero-bg::after {
             content: '';
             position: absolute;
             top: 10%;
-            right: 20%;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(50, 50, 255, 0.5) 0%, transparent 70%);
+            right: 5%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(60, 80, 255, 0.4) 0%, transparent 70%);
             border-radius: 50%;
-            filter: blur(40px);
+            filter: blur(20px);
+            animation: blobDrift 14s ease-in-out infinite alternate-reverse;
+        }
+
+        @keyframes blobDrift {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+            50% {
+                transform: translate(-20px, 15px) scale(1.05);
+            }
+            100% {
+                transform: translate(10px, -10px) scale(0.97);
+            }
         }
 
         .hero-gradient-accent {
             position: absolute;
             bottom: -10%;
-            left: 30%;
-            width: 500px;
-            height: 300px;
-            background: radial-gradient(ellipse, rgba(100, 50, 200, 0.3) 0%, transparent 70%);
+            left: 20%;
+            width: 600px;
+            height: 400px;
+            background: radial-gradient(ellipse, rgba(80, 40, 180, 0.25) 0%, transparent 70%);
             z-index: 0;
+            animation: blobDrift 22s ease-in-out infinite alternate;
         }
 
         .hero-green-accent {
@@ -316,7 +333,7 @@
             left: 3%;
             right: 15%;
             bottom: 5%;
-            background: linear-gradient(160deg, rgba(30, 20, 70, 0.6) 0%, rgba(15, 10, 45, 0.8) 100%);
+            background: linear-gradient(160deg, rgba(25, 20, 60, 0.7) 0%, rgba(15, 12, 40, 0.85) 100%);
             border-radius: 24px;
             border: 1px solid rgba(255, 255, 255, 0.06);
             z-index: 1;
@@ -915,7 +932,9 @@
 
         .learn-visual {
             aspect-ratio: 1;
-            background: linear-gradient(135deg, #1a1040, #0f0a2e);
+            background-image: url('{{ asset("images/product_passive.png") }}');
+            background-size: cover;
+            background-position: center;
             border-radius: 20px;
             border: 1px solid rgba(255, 255, 255, 0.06);
             display: flex;
@@ -923,12 +942,12 @@
             justify-content: center;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            transition: transform 0.3s ease;
         }
-
-        .learn-visual::before {
-            content: '📚';
-            font-size: 80px;
-            opacity: 0.3;
+        
+        .learn-visual:hover {
+            transform: translateY(-5px) scale(1.02);
         }
 
         /* ========== FEATURES SECTION ========== */
@@ -1284,8 +1303,12 @@
         </div>
         <div class="nav-right">
             <div class="nav-auth-links">
-                <a href="/login" class="login-link">Login</a>
-                <a href="/register" class="signup-link">Register</a>
+                @auth
+                    <a href="{{ route('dashboard') }}" class="signup-link">Dashboard</a>
+                @else
+                    <a href="/login" class="login-link">Login</a>
+                    <a href="/register" class="signup-link">Register</a>
+                @endauth
             </div>
             <button class="icon-btn download-btn" aria-label="Download app">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -1315,8 +1338,12 @@
         <a href="#">Learn <span class="chevron">▾</span></a>
         <a href="#">Company <span class="chevron">▾</span></a>
         <div class="mobile-auth">
-            <a href="/login" class="m-login">Login</a>
-            <a href="/register" class="m-signup">Register</a>
+            @auth
+                <a href="{{ route('dashboard') }}" class="m-signup">Dashboard</a>
+            @else
+                <a href="/login" class="m-login">Login</a>
+                <a href="/register" class="m-signup">Register</a>
+            @endauth
         </div>
     </div>
 
@@ -1413,6 +1440,84 @@
             </div>
         </div>
     </section>
+    
+    <!-- Investment Plans Section -->
+    <section class="section plans-section" id="investment-plans">
+        <div class="section-inner">
+            <div class="section-label">Investment Vehicles</div>
+            <div class="section-title">Institutional-grade investment plans.</div>
+            <p class="section-desc">Choose a plan that fits your strategy. From high-growth Tesla stock indices to diversified Crypto portfolios.</p>
+            
+            <div class="tab-nav" id="planTabs">
+                <button class="tab-btn active" data-tab="plan-tesla">Tesla Investment</button>
+                <button class="tab-btn" data-tab="plan-crypto">Crypto Investment</button>
+            </div>
+
+            <!-- Tesla Plans -->
+            <div class="tab-content active" id="plan-tesla">
+                <div class="price-grid" style="width: 100%;">
+                    @foreach($teslaPlans as $plan)
+                    <div class="price-card" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+                        <div>
+                            <div class="price-card-top">
+                                <div class="price-coin-icon" style="background: var(--ndax-lime); color: #000;">⚡</div>
+                                <div>
+                                    <div class="price-coin-name">{{ $plan->name }}</div>
+                                    <div class="price-coin-symbol">Tesla Index</div>
+                                </div>
+                            </div>
+                            <div class="price-value" style="color: var(--ndax-lime);">{{ $plan->roi_percent }}% ROI</div>
+                            <div class="price-change" style="margin-bottom: 20px;">Duration: {{ $plan->duration_days }} Days</div>
+                            <div style="font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.6; margin-bottom: 20px;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                    <span>Min Deposit:</span>
+                                    <span style="color: #fff;">${{ number_format($plan->min_amount) }}</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between;">
+                                    <span>Max Deposit:</span>
+                                    <span style="color: #fff;">${{ number_format($plan->max_amount) }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="{{ route('register') }}" class="btn-lime" style="width: 100%; justify-content: center; text-align: center;">Invest Now</a>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+
+            <!-- Crypto Plans -->
+            <div class="tab-content" id="plan-crypto">
+                <div class="price-grid" style="width: 100%;">
+                    @foreach($cryptoPlans as $plan)
+                    <div class="price-card" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+                        <div>
+                            <div class="price-card-top">
+                                <div class="price-coin-icon" style="background: #4444ff; color: #fff;">₿</div>
+                                <div>
+                                    <div class="price-coin-name">{{ $plan->name }}</div>
+                                    <div class="price-coin-symbol">Crypto Portfolio</div>
+                                </div>
+                            </div>
+                            <div class="price-value" style="color: #4444ff;">{{ $plan->roi_percent }}% ROI</div>
+                            <div class="price-change" style="margin-bottom: 20px;">Duration: {{ $plan->duration_days }} Days</div>
+                            <div style="font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.6; margin-bottom: 20px;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                    <span>Min Deposit:</span>
+                                    <span style="color: #fff;">${{ number_format($plan->min_amount) }}</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between;">
+                                    <span>Max Deposit:</span>
+                                    <span style="color: #fff;">${{ number_format($plan->max_amount) }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="{{ route('register') }}" class="btn-lime" style="width: 100%; justify-content: center; text-align: center;">Invest Now</a>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Our Products Section -->
     <section class="section products-section" id="products">
@@ -1435,7 +1540,7 @@
                         and reliable passive income with our easy-to-use staking platform.</p>
                     <a href="#" class="btn-lime">Learn More →</a>
                 </div>
-                <div class="tab-image"><span class="tab-image-placeholder">📈</span></div>
+                <div class="tab-image"><img src="{{ asset('images/product_passive.png') }}" style="width:100%; height:100%; object-fit:cover;" alt="Passive Income"></div>
             </div>
             <div class="tab-content" id="prod-advanced">
                 <div class="tab-text">
@@ -1444,7 +1549,7 @@
                         execution, multiple order types, real-time market data, and technical indicators.</p>
                     <a href="#" class="btn-lime">Learn More →</a>
                 </div>
-                <div class="tab-image"><span class="tab-image-placeholder">📊</span></div>
+                <div class="tab-image"><img src="{{ asset('images/product_trading.png') }}" style="width:100%; height:100%; object-fit:cover;" alt="Advanced Trading"></div>
             </div>
             <div class="tab-content" id="prod-simple">
                 <div class="tab-text">
@@ -1453,7 +1558,7 @@
                         instantly.</p>
                     <a href="#" class="btn-lime">Learn More →</a>
                 </div>
-                <div class="tab-image"><span class="tab-image-placeholder">🖱️</span></div>
+                <div class="tab-image"><img src="{{ asset('images/product_trading.png') }}" style="width:100%; height:100%; object-fit:cover;" alt="Simple Trading"></div>
             </div>
             <div class="tab-content" id="prod-otc">
                 <div class="tab-text">
@@ -1463,7 +1568,7 @@
                         and personalized service.</p>
                     <a href="#" class="btn-lime">Learn More →</a>
                 </div>
-                <div class="tab-image"><span class="tab-image-placeholder">💎</span></div>
+                <div class="tab-image"><img src="{{ asset('images/product_passive.png') }}" style="width:100%; height:100%; object-fit:cover;" alt="Wealth OTC"></div>
             </div>
             <div class="tab-content" id="prod-fees">
                 <div class="tab-text">
@@ -1473,7 +1578,7 @@
                         support for cheaper withdrawals.</p>
                     <a href="#" class="btn-lime">Learn More →</a>
                 </div>
-                <div class="tab-image"><span class="tab-image-placeholder">💰</span></div>
+                <div class="tab-image"><img src="{{ asset('images/product_trading.png') }}" style="width:100%; height:100%; object-fit:cover;" alt="Fees"></div>
             </div>
         </div>
     </section>
@@ -1517,7 +1622,7 @@
                         knowing your assets and personal information are safe.</p>
                     <a href="#" class="btn-lime">Learn More →</a>
                 </div>
-                <div class="tab-image"><span class="tab-image-placeholder">🔒</span></div>
+                <div class="tab-image"><img src="{{ asset('images/product_passive.png') }}" style="width:100%; height:100%; object-fit:cover;" alt="Security"></div>
             </div>
             <div class="tab-content" id="feat-invest">
                 <div class="tab-text">
@@ -1526,7 +1631,7 @@
                         scheduled purchases to diversify your portfolio effortlessly.</p>
                     <a href="#" class="btn-lime">Learn More →</a>
                 </div>
-                <div class="tab-image"><span class="tab-image-placeholder">🤖</span></div>
+                <div class="tab-image"><img src="{{ asset('images/product_trading.png') }}" style="width:100%; height:100%; object-fit:cover;" alt="Auto Invest"></div>
             </div>
             <div class="tab-content" id="feat-orders">
                 <div class="tab-text">
@@ -1535,7 +1640,7 @@
                         trailing stop orders, fill or kill orders and more.</p>
                     <a href="#" class="btn-lime">Learn More →</a>
                 </div>
-                <div class="tab-image"><span class="tab-image-placeholder">⚡</span></div>
+                <div class="tab-image"><img src="{{ asset('images/product_trading.png') }}" style="width:100%; height:100%; object-fit:cover;" alt="Advanced Order Types"></div>
             </div>
             <div class="tab-content" id="feat-affiliate">
                 <div class="tab-text">
@@ -1544,7 +1649,7 @@
                         join Prime Trade Access. Receive bonuses for each qualifying referral.</p>
                     <a href="#" class="btn-lime">Learn More →</a>
                 </div>
-                <div class="tab-image"><span class="tab-image-placeholder">🎁</span></div>
+                <div class="tab-image"><img src="{{ asset('images/product_passive.png') }}" style="width:100%; height:100%; object-fit:cover;" alt="Affiliate Rewards"></div>
             </div>
             <div class="tab-content" id="feat-address">
                 <div class="tab-text">
@@ -1554,7 +1659,7 @@
                         histories.</p>
                     <a href="#" class="btn-lime">Learn More →</a>
                 </div>
-                <div class="tab-image"><span class="tab-image-placeholder">📒</span></div>
+                <div class="tab-image"><img src="{{ asset('images/product_passive.png') }}" style="width:100%; height:100%; object-fit:cover;" alt="Address Book"></div>
             </div>
             <div class="tab-content" id="feat-tax">
                 <div class="tab-text">
@@ -1563,7 +1668,7 @@
                         you file your crypto taxes effortlessly.</p>
                     <a href="#" class="btn-lime">Learn More →</a>
                 </div>
-                <div class="tab-image"><span class="tab-image-placeholder">📋</span></div>
+                <div class="tab-image"><img src="{{ asset('images/product_trading.png') }}" style="width:100%; height:100%; object-fit:cover;" alt="Tax Reporting"></div>
             </div>
         </div>
     </section>
@@ -1631,7 +1736,7 @@
                         offering custody, trading, and staking within a robust security framework.</p>
                     <a href="#" class="btn-lime">Learn More →</a>
                 </div>
-                <div class="tab-image"><span class="tab-image-placeholder">🏦</span></div>
+                <div class="tab-image"><img src="{{ asset('images/product_passive.png') }}" style="width:100%; height:100%; object-fit:cover;" alt="Treasury"></div>
             </div>
             <div class="tab-content" id="biz-institutional">
                 <div class="tab-text">
@@ -1640,7 +1745,7 @@
                         integrate digital assets into your product offering seamlessly.</p>
                     <a href="#" class="btn-lime">Learn More →</a>
                 </div>
-                <div class="tab-image"><span class="tab-image-placeholder">🏢</span></div>
+                <div class="tab-image"><img src="{{ asset('images/product_trading.png') }}" style="width:100%; height:100%; object-fit:cover;" alt="Institutional"></div>
             </div>
             <div class="tab-content" id="biz-liquidity">
                 <div class="tab-text">
@@ -1649,7 +1754,7 @@
                         fees, enhancing the efficiency of high-volume cryptocurrency transactions.</p>
                     <a href="#" class="btn-lime">Learn More →</a>
                 </div>
-                <div class="tab-image"><span class="tab-image-placeholder">💧</span></div>
+                <div class="tab-image"><img src="{{ asset('images/product_passive.png') }}" style="width:100%; height:100%; object-fit:cover;" alt="Liquidity"></div>
             </div>
             <div class="tab-content" id="biz-whitelabel">
                 <div class="tab-text">
@@ -1658,7 +1763,7 @@
                         comprehensive solutions for acquiring cryptocurrency.</p>
                     <a href="#" class="btn-lime">Learn More →</a>
                 </div>
-                <div class="tab-image"><span class="tab-image-placeholder">🏷️</span></div>
+                <div class="tab-image"><img src="{{ asset('images/product_trading.png') }}" style="width:100%; height:100%; object-fit:cover;" alt="White Label"></div>
             </div>
             <div class="tab-content" id="biz-mining">
                 <div class="tab-text">
@@ -1667,7 +1772,7 @@
                         solutions to streamline operations.</p>
                     <a href="#" class="btn-lime">Learn More →</a>
                 </div>
-                <div class="tab-image"><span class="tab-image-placeholder">⛏️</span></div>
+                <div class="tab-image"><img src="{{ asset('images/product_passive.png') }}" style="width:100%; height:100%; object-fit:cover;" alt="Mining"></div>
             </div>
             <div class="tab-content" id="biz-otc">
                 <div class="tab-text">
@@ -1676,7 +1781,7 @@
                         secure trading, access to deep liquidity, and a wide selection of digital assets.</p>
                     <a href="#" class="btn-lime">Learn More →</a>
                 </div>
-                <div class="tab-image"><span class="tab-image-placeholder">🤝</span></div>
+                <div class="tab-image"><img src="{{ asset('images/product_trading.png') }}" style="width:100%; height:100%; object-fit:cover;" alt="OTC"></div>
             </div>
             <div class="tab-content" id="biz-referrals">
                 <div class="tab-text">
@@ -1684,7 +1789,7 @@
                     <p>Introduce businesses to Prime Trade Access' services and earn rewards for every successful referral.</p>
                     <a href="#" class="btn-lime">Learn More →</a>
                 </div>
-                <div class="tab-image"><span class="tab-image-placeholder">🔗</span></div>
+                <div class="tab-image"><img src="{{ asset('images/product_passive.png') }}" style="width:100%; height:100%; object-fit:cover;" alt="Referrals"></div>
             </div>
             <div class="tab-content" id="biz-finance">
                 <div class="tab-text">
@@ -1693,7 +1798,7 @@
                         offering innovative solutions to expand their service offerings.</p>
                     <a href="#" class="btn-lime">Learn More →</a>
                 </div>
-                <div class="tab-image"><span class="tab-image-placeholder">🏛️</span></div>
+                <div class="tab-image"><img src="{{ asset('images/product_trading.png') }}" style="width:100%; height:100%; object-fit:cover;" alt="Finance"></div>
             </div>
         </div>
     </section>
@@ -1722,21 +1827,21 @@
             </div>
             <div class="blog-grid">
                 <div class="blog-card">
-                    <div class="blog-thumb"></div>
+                    <div class="blog-thumb" style="background-image: url('{{ asset('images/product_trading.png') }}'); background-size: cover; background-position: center;"></div>
                     <div class="blog-body">
                         <h3>Prime Trade Access Ice Playoffs Are Here! Make Picks. Climb the Leaderboard. Win Bigger.</h3>
                         <a href="#" class="read-link">Read Article →</a>
                     </div>
                 </div>
                 <div class="blog-card">
-                    <div class="blog-thumb" style="background: linear-gradient(135deg, #1a2040, #162e3e);"></div>
+                    <div class="blog-thumb" style="background-image: url('{{ asset('images/product_passive.png') }}'); background-size: cover; background-position: center;"></div>
                     <div class="blog-body">
                         <h3>Staking on Prime Trade Access: How You Could Earn Rewards in a Volatile Market</h3>
                         <a href="#" class="read-link">Read Article →</a>
                     </div>
                 </div>
                 <div class="blog-card">
-                    <div class="blog-thumb" style="background: linear-gradient(135deg, #2a1040, #1e0a3e);"></div>
+                    <div class="blog-thumb" style="background-image: url('{{ asset('images/product_trading.png') }}'); background-size: cover; background-position: center;"></div>
                     <div class="blog-body">
                         <h3>What Is the Fear and Greed Index in Crypto?</h3>
                         <a href="#" class="read-link">Read Article →</a>
