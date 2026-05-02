@@ -5,11 +5,20 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 
+use App\Http\Controllers\FrontendController;
+
 Route::get('/', function () {
     $teslaPlans = \App\Models\InvestmentPlan::where('type', 'tesla')->get();
     $cryptoPlans = \App\Models\InvestmentPlan::where('type', 'crypto')->get();
     return view('welcome', compact('teslaPlans', 'cryptoPlans'));
 });
+
+Route::get('/products', [FrontendController::class, 'products'])->name('frontend.products');
+Route::get('/features', [FrontendController::class, 'features'])->name('frontend.features');
+Route::get('/markets', [FrontendController::class, 'markets'])->name('frontend.markets');
+Route::get('/learn', [FrontendController::class, 'learn'])->name('frontend.learn');
+Route::get('/company', [FrontendController::class, 'company'])->name('frontend.company');
+Route::get('/blog/{slug?}', [FrontendController::class, 'blogArticle'])->name('frontend.blog.article');
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
