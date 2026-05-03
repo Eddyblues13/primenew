@@ -179,7 +179,8 @@
             gap: 4px;
         }
 
-        .nav-links a:hover, .nav-links a.active {
+        .nav-links a:hover,
+        .nav-links a.active {
             color: #fff;
             background: rgba(255, 255, 255, 0.06);
         }
@@ -295,9 +296,11 @@
             0% {
                 transform: translate(0, 0) scale(1);
             }
+
             50% {
                 transform: translate(-20px, 15px) scale(1.05);
             }
+
             100% {
                 transform: translate(10px, -10px) scale(0.97);
             }
@@ -783,10 +786,10 @@
             justify-content: center;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
             transition: transform 0.3s ease;
         }
-        
+
         .learn-visual:hover {
             transform: translateY(-5px) scale(1.02);
         }
@@ -1141,7 +1144,7 @@
                 font-size: 12px;
             }
         }
-        
+
         /* Plan Cards added back to make sure dashboard dynamic styles work */
         .plan-card {
             background: #111;
@@ -1187,12 +1190,26 @@
         }
     </style>
     @stack('styles')
+    <!-- Smartsupp Live Chat script -->
+    <script type="text/javascript">
+        var _smartsupp = _smartsupp || {};
+        _smartsupp.key = 'fcd805574ebf2082b1afb7ec22afa3d6c97b04e8';
+        window.smartsupp || (function (d) {
+            var s, c, o = smartsupp = function () { o._.push(arguments) }; o._ = [];
+            s = d.getElementsByTagName('script')[0]; c = d.createElement('script');
+            c.type = 'text/javascript'; c.charset = 'utf-8'; c.async = true;
+            c.src = 'https://www.smartsuppchat.com/loader.js?'; s.parentNode.insertBefore(c, s);
+        })(document);
+    </script>
+    <noscript>Powered by <a href="https://www.smartsupp.com" target="_blank">Smartsupp</a></noscript>
+
 </head>
 
 <body>
     <!-- Alert Bar -->
     <div class="alert-bar" id="alertBar">
-        <p>Alert: Protect Your Account – Prime Trade Access will never contact you to request funds, passwords, or personal
+        <p>Alert: Protect Your Account – Prime Trade Access will never contact you to request funds, passwords, or
+            personal
             information. Contact Prime Trade Access Support directly if y...</p>
         <button class="dismiss-btn"
             onclick="document.getElementById('alertBar').classList.add('hidden')">Dismiss</button>
@@ -1223,11 +1240,16 @@
                 </div>
             </a>
             <div class="nav-links">
-                <a href="{{ route('frontend.products') }}" class="{{ request()->routeIs('frontend.products') ? 'active' : '' }}">Products</a>
-                <a href="{{ route('frontend.features') }}" class="{{ request()->routeIs('frontend.features') ? 'active' : '' }}">Features</a>
-                <a href="{{ route('frontend.markets') }}" class="{{ request()->routeIs('frontend.markets') ? 'active' : '' }}">Markets</a>
-                <a href="{{ route('frontend.learn') }}" class="{{ request()->routeIs('frontend.learn') ? 'active' : '' }}">Learn</a>
-                <a href="{{ route('frontend.company') }}" class="{{ request()->routeIs('frontend.company') ? 'active' : '' }}">Company</a>
+                <a href="{{ route('frontend.products') }}"
+                    class="{{ request()->routeIs('frontend.products') ? 'active' : '' }}">Products</a>
+                <a href="{{ route('frontend.features') }}"
+                    class="{{ request()->routeIs('frontend.features') ? 'active' : '' }}">Features</a>
+                <a href="{{ route('frontend.markets') }}"
+                    class="{{ request()->routeIs('frontend.markets') ? 'active' : '' }}">Markets</a>
+                <a href="{{ route('frontend.learn') }}"
+                    class="{{ request()->routeIs('frontend.learn') ? 'active' : '' }}">Learn</a>
+                <a href="{{ route('frontend.company') }}"
+                    class="{{ request()->routeIs('frontend.company') ? 'active' : '' }}">Company</a>
             </div>
         </div>
         <div class="nav-right">
@@ -1286,7 +1308,8 @@
             <div class="footer-grid">
                 <div class="footer-brand">
                     <div class="footer-logo">Prime Trade Access</div>
-                    <p>Trade Bitcoin, Ethereum, and more on Prime Trade Access. Enjoy secure, simple trading and asset management.</p>
+                    <p>Trade Bitcoin, Ethereum, and more on Prime Trade Access. Enjoy secure, simple trading and asset
+                        management.</p>
                 </div>
                 <div class="footer-col">
                     <h4>Products</h4>
@@ -1347,7 +1370,7 @@
         const mobileMenu = document.getElementById('mobileMenu');
         const mobileMenuClose = document.getElementById('mobileMenuClose');
 
-        if(hamburgerBtn && mobileMenu) {
+        if (hamburgerBtn && mobileMenu) {
             hamburgerBtn.addEventListener('click', () => {
                 mobileMenu.classList.add('active');
                 document.body.style.overflow = 'hidden';
@@ -1368,7 +1391,7 @@
 
         // Dismiss alert bar
         const dismissBtn = document.querySelector('#alertBar .dismiss-btn');
-        if(dismissBtn) {
+        if (dismissBtn) {
             dismissBtn.addEventListener('click', () => {
                 document.getElementById('alertBar').style.display = 'none';
             });
