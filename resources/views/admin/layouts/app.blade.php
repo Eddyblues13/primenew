@@ -78,6 +78,10 @@
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 Deposits
             </a>
+            <a href="{{ route('admin.deposit-methods.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl {{ request()->routeIs('admin.deposit-methods.*') ? 'bg-brand-500 bg-opacity-10 text-brand-400 border border-brand-500 border-opacity-20 font-medium' : 'text-gray-400 hover:text-white hover:bg-dark-700 transition-colors' }}">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                Deposit Details
+            </a>
             <a href="{{ route('admin.withdrawals.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl {{ request()->routeIs('admin.withdrawals.*') ? 'bg-brand-500 bg-opacity-10 text-brand-400 border border-brand-500 border-opacity-20 font-medium' : 'text-gray-400 hover:text-white hover:bg-dark-700 transition-colors' }}">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 0C5.383 0 0 5.383 0 12s5.383 12 12 12 12-5.383 12-12S18.617 0 12 0zm-1.07 18.062v-1.84c-3.143-.377-4.14-2.584-4.14-2.584.806-.44.896-.347.896-.347 1.157.962 3.102 1.353 4.295.69 1.488-.823.957-2.73-1.03-3.665-2.288-1.078-4.996-2.023-4.524-5.115.343-2.247 2.37-3.414 4.503-3.722V-.001h1.983v1.654c2.616.48 3.528 2.274 3.528 2.274-.632.617-.837.545-.837.545-.92-1.025-2.618-1.32-3.738-.646-1.094.66-1.125 2.18-.088 2.87 2.316 1.542 5.285 2.057 4.542 5.438-.55 2.502-2.82 3.486-4.39 3.926v1.98h-1.999z"></path></svg>
                 Withdrawals
