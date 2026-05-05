@@ -8,53 +8,33 @@
     
     <!-- Balance Overview -->
     <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="glass-panel p-6 rounded-2xl border border-dark-600 md:col-span-2 relative overflow-hidden">
-            <div class="absolute right-0 top-0 w-64 h-64 bg-brand-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 -translate-y-1/2 translate-x-1/3"></div>
-            <p class="text-gray-400 font-medium mb-1">Total Portfolio Value</p>
-            <h2 class="text-4xl lg:text-5xl font-bold text-white mb-2 tracking-tight">$142,390.50</h2>
-            <div class="flex items-center gap-2">
-                <span class="inline-flex items-center gap-1 text-green-400 bg-green-400 bg-opacity-10 px-2 py-1 rounded-md text-sm font-medium">
-                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
-                    +$12,450.00 (9.5%)
-                </span>
-                <span class="text-gray-500 text-sm">Past 30 days</span>
-            </div>
-            
-            <div class="mt-8 flex gap-4">
-                <a href="{{ route('deposits.index') }}" class="inline-block bg-brand-500 hover:bg-brand-400 text-white px-6 py-2.5 rounded-xl font-medium transition-colors shadow-[0_0_15px_rgba(160,113,255,0.4)]">Deposit</a>
-                <button class="bg-dark-700 hover:bg-dark-600 text-white px-6 py-2.5 rounded-xl font-medium transition-colors border border-dark-600">Withdraw</button>
-            </div>
+        <!-- Total Balance -->
+        <div class="glass-panel p-8 rounded-2xl border border-dark-600 relative overflow-hidden flex flex-col justify-center">
+            <div class="absolute right-0 top-0 w-32 h-32 bg-brand-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 -translate-y-1/2 translate-x-1/3"></div>
+            <h2 class="text-4xl lg:text-5xl font-bold text-white mb-3 tracking-tight">$ {{ number_format(auth()->user()->balance, 2) }}</h2>
+            <p class="text-gray-400 font-medium text-sm tracking-widest uppercase">Total Balance</p>
         </div>
-        
-        <div class="glass-panel p-6 rounded-2xl border border-dark-600 flex flex-col justify-between">
-            <div>
-                <p class="text-gray-400 font-medium mb-4">Asset Allocation</p>
-                <div class="space-y-4">
-                    <div>
-                        <div class="flex justify-between text-sm mb-1">
-                            <span class="text-white flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-red-500"></div> Tesla (TSLA)</span>
-                            <span class="text-gray-400">65%</span>
-                        </div>
-                        <div class="w-full bg-dark-700 rounded-full h-1.5"><div class="bg-red-500 h-1.5 rounded-full" style="width: 65%"></div></div>
-                    </div>
-                    <div>
-                        <div class="flex justify-between text-sm mb-1">
-                            <span class="text-white flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-orange-400"></div> Bitcoin (BTC)</span>
-                            <span class="text-gray-400">25%</span>
-                        </div>
-                        <div class="w-full bg-dark-700 rounded-full h-1.5"><div class="bg-orange-400 h-1.5 rounded-full" style="width: 25%"></div></div>
-                    </div>
-                    <div>
-                        <div class="flex justify-between text-sm mb-1">
-                            <span class="text-white flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-blue-500"></div> Ethereum (ETH)</span>
-                            <span class="text-gray-400">10%</span>
-                        </div>
-                        <div class="w-full bg-dark-700 rounded-full h-1.5"><div class="bg-blue-500 h-1.5 rounded-full" style="width: 10%"></div></div>
-                    </div>
-                </div>
-            </div>
+
+        <!-- Capital -->
+        <div class="glass-panel p-8 rounded-2xl border border-dark-600 relative overflow-hidden flex flex-col justify-center">
+            <div class="absolute right-0 top-0 w-32 h-32 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 -translate-y-1/2 translate-x-1/3"></div>
+            <h2 class="text-4xl lg:text-5xl font-bold text-white mb-3 tracking-tight">$ {{ number_format(auth()->user()->deposits->where('status', 'approved')->sum('amount'), 2) }}</h2>
+            <p class="text-gray-400 font-medium text-sm tracking-widest uppercase">Capital</p>
+        </div>
+
+        <!-- Profit Earned -->
+        <div class="glass-panel p-8 rounded-2xl border border-dark-600 relative overflow-hidden flex flex-col justify-center">
+            <div class="absolute right-0 top-0 w-32 h-32 bg-green-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 -translate-y-1/2 translate-x-1/3"></div>
+            <h2 class="text-4xl lg:text-5xl font-bold text-white mb-3 tracking-tight">$ {{ number_format(auth()->user()->profits->where('type', 'add')->sum('amount') - auth()->user()->profits->where('type', 'subtract')->sum('amount'), 2) }}</h2>
+            <p class="text-gray-400 font-medium text-sm tracking-widest uppercase">Profit Earned</p>
         </div>
     </section>
+
+    <!-- Quick Actions -->
+    <div class="flex gap-4">
+        <a href="{{ route('deposits.index') }}" class="flex-1 text-center bg-brand-500 hover:bg-brand-400 text-white px-6 py-3.5 rounded-xl font-semibold transition-colors shadow-[0_0_15px_rgba(160,113,255,0.4)]">Deposit</a>
+        <a href="{{ route('withdrawals.index') }}" class="flex-1 text-center bg-dark-700 hover:bg-dark-600 text-white px-6 py-3.5 rounded-xl font-semibold transition-colors border border-dark-600">Withdraw</a>
+    </div>
 
     <!-- Assets Grid -->
     <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -187,6 +167,42 @@
                     </tr>
                 </tbody>
             </table>
+        </div>
+    </section>
+
+    <!-- Market Overview Chart -->
+    <section class="glass-panel rounded-2xl border border-dark-600 overflow-hidden mt-6">
+        <div class="p-4 md:p-6 border-b border-dark-600 flex justify-between items-center bg-dark-800/50">
+            <h3 class="font-bold text-white text-base md:text-lg">Market Overview</h3>
+        </div>
+        <div class="h-[350px] sm:h-[400px] md:h-[500px] lg:h-[600px] w-full bg-dark-900">
+            <!-- TradingView Widget BEGIN -->
+            <div class="tradingview-widget-container" style="height:100%;width:100%">
+              <div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
+              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+              {
+              "autosize": true,
+              "width": "100%",
+              "height": "100%",
+              "symbol": "BITSTAMP:BTCUSD",
+              "interval": "1",
+              "timezone": "Etc/UTC",
+              "theme": "dark",
+              "style": "1",
+              "locale": "en",
+              "enable_publishing": false,
+              "backgroundColor": "#08060f",
+              "gridColor": "#2a2536",
+              "hide_top_toolbar": false,
+              "hide_legend": false,
+              "save_image": false,
+              "allow_symbol_change": true,
+              "calendar": false,
+              "support_host": "https://www.tradingview.com"
+            }
+              </script>
+            </div>
+            <!-- TradingView Widget END -->
         </div>
     </section>
 

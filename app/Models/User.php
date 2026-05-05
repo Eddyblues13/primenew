@@ -65,4 +65,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Withdrawal::class);
     }
+
+    public function profits()
+    {
+        return $this->hasMany(Profit::class);
+    }
+
+    public function kyc()
+    {
+        return $this->hasOne(Kyc::class);
+    }
 }

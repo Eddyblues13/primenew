@@ -23,14 +23,21 @@ class AdminDepositMethodController extends Controller
             'type' => 'required|in:crypto,fiat',
             'wallet_address' => 'nullable|string|max:500',
             'bank_details' => 'nullable|string|max:1000',
-            'qr_code_url' => 'nullable|string|max:500',
             'is_active' => 'sometimes|boolean',
         ]);
 
-        DepositMethod::create([
-            ...$request->only(['name', 'currency_code', 'type', 'wallet_address', 'bank_details', 'qr_code_url']),
+        $data = [
+            ...$request->only(['name', 'currency_code', 'type', 'wallet_address', 'bank_details']),
             'is_active' => $request->boolean('is_active', true),
-        ]);
+        ];
+
+        if ($data['type'] === 'crypto' && !empty($data['wallet_address'])) {
+            $data['qr_code_url'] = 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=' . urlencode($data['wallet_address']);
+        } else {
+            $data['qr_code_url'] = null;
+        }
+
+        DepositMethod::create($data);
 
         return redirect()->route('admin.deposit-methods.index')->with('success', 'Deposit method created successfully.');
     }
@@ -43,14 +50,21 @@ class AdminDepositMethodController extends Controller
             'type' => 'required|in:crypto,fiat',
             'wallet_address' => 'nullable|string|max:500',
             'bank_details' => 'nullable|string|max:1000',
-            'qr_code_url' => 'nullable|string|max:500',
             'is_active' => 'sometimes|boolean',
         ]);
 
-        $depositMethod->update([
-            ...$request->only(['name', 'currency_code', 'type', 'wallet_address', 'bank_details', 'qr_code_url']),
+        $data = [
+            ...$request->only(['name', 'currency_code', 'type', 'wallet_address', 'bank_details']),
             'is_active' => $request->boolean('is_active', true),
-        ]);
+        ];
+
+        if ($data['type'] === 'crypto' && !empty($data['wallet_address'])) {
+            $data['qr_code_url'] = 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=' . urlencode($data['wallet_address']);
+        } else {
+            $data['qr_code_url'] = null;
+        }
+
+        $depositMethod->update($data);
 
         return redirect()->route('admin.deposit-methods.index')->with('success', 'Deposit method updated successfully.');
     }

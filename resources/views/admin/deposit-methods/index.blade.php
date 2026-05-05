@@ -7,7 +7,7 @@
 <div x-data="{
         createModalOpen: false,
         editModalOpen: false,
-        editForm: { id: '', name: '', currency_code: '', type: 'crypto', wallet_address: '', bank_details: '', qr_code_url: '', is_active: true },
+        editForm: { id: '', name: '', currency_code: '', type: 'crypto', wallet_address: '', bank_details: '', is_active: true },
 
         openEditModal(method) {
             this.editForm = {
@@ -17,7 +17,6 @@
                 type: method.type,
                 wallet_address: method.wallet_address || '',
                 bank_details: method.bank_details || '',
-                qr_code_url: method.qr_code_url || '',
                 is_active: method.is_active ? true : false,
             };
             this.editModalOpen = true;
@@ -157,10 +156,6 @@
                             <label class="block text-sm font-medium text-gray-300 mb-1">Bank Details</label>
                             <textarea name="bank_details" rows="3" placeholder="Bank name, account number, routing, etc. (leave blank for crypto)" class="w-full bg-dark-800 border border-dark-600 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-brand-500 resize-none"></textarea>
                         </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-300 mb-1">QR Code URL</label>
-                            <input type="text" name="qr_code_url" placeholder="https://example.com/qr.png" class="w-full bg-dark-800 border border-dark-600 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-brand-500">
-                        </div>
                     </div>
                     <div class="px-6 py-4 border-t border-dark-600 flex justify-end gap-3 bg-dark-800/30">
                         <button type="button" @click="createModalOpen = false" class="px-4 py-2 bg-dark-700 text-white rounded-lg font-medium hover:bg-dark-600">Cancel</button>
@@ -218,10 +213,6 @@
                         <div>
                             <label class="block text-sm font-medium text-gray-300 mb-1">Bank Details</label>
                             <textarea name="bank_details" rows="3" x-model="editForm.bank_details" class="w-full bg-dark-800 border border-dark-600 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-brand-500 resize-none"></textarea>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-300 mb-1">QR Code URL</label>
-                            <input type="text" name="qr_code_url" x-model="editForm.qr_code_url" class="w-full bg-dark-800 border border-dark-600 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-brand-500">
                         </div>
                     </div>
                     <div class="px-6 py-4 border-t border-dark-600 flex justify-end gap-3 bg-dark-800/30">

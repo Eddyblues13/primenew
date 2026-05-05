@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminDepositController;
 use App\Http\Controllers\Admin\AdminDepositMethodController;
 use App\Http\Controllers\Admin\AdminInvestmentController;
+use App\Http\Controllers\Admin\AdminKycController;
 use App\Http\Controllers\Admin\AdminManageController;
 use App\Http\Controllers\Admin\AdminPlanController;
 use App\Http\Controllers\Admin\AdminSettingsController;
@@ -15,6 +16,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepositController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\InvestmentController;
+use App\Http\Controllers\KycController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\WithdrawalController;
 use App\Models\InvestmentPlan;
@@ -61,6 +63,9 @@ Route::middleware('auth')->prefix('user')->group(function () {
     Route::get('/withdrawals', [WithdrawalController::class, 'index'])->name('withdrawals.index');
     Route::post('/withdrawals', [WithdrawalController::class, 'store'])->name('withdrawals.store');
     Route::get('/withdrawals/history', [WithdrawalController::class, 'history'])->name('withdrawals.history');
+
+    Route::get('/kyc', [KycController::class, 'index'])->name('kyc.index');
+    Route::post('/kyc', [KycController::class, 'store'])->name('kyc.store');
 });
 
 // Admin Routes
@@ -76,8 +81,16 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/users/{user}', [AdminUserController::class, 'show'])->name('users.show');
         Route::delete('/users/{user}', [AdminUserController::class, 'destroy'])->name('users.destroy');
         Route::post('/users/{user}/balance', [AdminUserController::class, 'updateBalance'])->name('users.balance');
+        Route::post('/users/{user}/profit', [AdminUserController::class, 'updateProfit'])->name('users.profit');
         Route::post('/users/{user}/login-as', [AdminUserController::class, 'loginAs'])->name('users.loginAs');
         Route::post('/users/{user}/mail', [AdminUserController::class, 'sendMail'])->name('users.mail');
+        
+        // KYC Routes
+        Route::get('/kyc', [AdminKycController::class, 'index'])->name('kyc.index');
+        Route::get('/kyc/{kyc}', [AdminKycController::class, 'show'])->name('kyc.show');
+        Route::post('/kyc/{kyc}/approve', [AdminKycController::class, 'approve'])->name('kyc.approve');
+        Route::post('/kyc/{kyc}/reject', [AdminKycController::class, 'reject'])->name('kyc.reject');
+
         Route::get('/deposits', [AdminDepositController::class, 'index'])->name('deposits.index');
 
         // Deposit Methods CRUD
