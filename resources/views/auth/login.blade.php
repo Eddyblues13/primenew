@@ -221,11 +221,7 @@
     <div class="left-panel">
         <div class="top-header">
             <a href="/" class="logo">
-                <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
-                    <rect x="4" y="8" width="6" height="18" fill="#a071ff" rx="1"/>
-                    <rect x="18" y="6" width="6" height="18" fill="#42a5f5" rx="1"/>
-                    <path d="M4 10 L22 22 L18 24 L2 12 Z" fill="#66bb6a" />
-                </svg>
+                <img src="{{ asset('images/logo.png') }}" alt="Logo" style="height: 32px;" />
                 Prime Trade Access
             </a>
             <div class="signup-cta">

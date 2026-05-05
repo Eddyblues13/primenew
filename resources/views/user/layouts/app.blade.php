@@ -88,11 +88,7 @@
         class="fixed inset-y-0 left-0 z-30 w-64 glass-panel border-r border-dark-600 transition-transform duration-300 lg:translate-x-0 lg:static lg:inset-auto lg:block flex flex-col">
         <div class="flex items-center justify-center h-20 border-b border-dark-600 px-6">
             <a href="/" class="flex items-center gap-3 text-white font-bold text-xl tracking-tight">
-                <svg width="24" height="24" viewBox="0 0 32 32" fill="none">
-                    <rect x="4" y="8" width="6" height="18" fill="#a071ff" rx="1" />
-                    <rect x="18" y="6" width="6" height="18" fill="#42a5f5" rx="1" />
-                    <path d="M4 10 L22 22 L18 24 L2 12 Z" fill="#66bb6a" />
-                </svg>
+                <img src="{{ asset('images/logo.png') }}" alt="Logo" style="height: 28px;" />
                 PTA
             </a>
         </div>
