@@ -27,7 +27,7 @@ Route::get('/', function () {
     $cryptoPlans = InvestmentPlan::where('type', 'crypto')->get();
 
     return view('welcome', compact('teslaPlans', 'cryptoPlans'));
-});
+})->name('home');
 
 Route::get('/products', [FrontendController::class, 'products'])->name('frontend.products');
 Route::get('/features', [FrontendController::class, 'features'])->name('frontend.features');
