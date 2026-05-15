@@ -8,6 +8,7 @@
         balanceModalOpen: false, 
         profitModalOpen: false,
         mailModalOpen: false,
+        bonusModalOpen: false,
         activeTab: 'overview'
     }" class="max-w-7xl mx-auto space-y-6">
 
@@ -42,6 +43,11 @@
                 <button @click="profitModalOpen = true; actionsOpen = false" class="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-gray-300 hover:text-white hover:bg-dark-700 transition-colors">
                     <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
                     Update Profit
+                </button>
+
+                <button @click="bonusModalOpen = true; actionsOpen = false" class="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-gray-300 hover:text-white hover:bg-dark-700 transition-colors">
+                    <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"></path></svg>
+                    Update Bonuses
                 </button>
 
                 <button @click="mailModalOpen = true; actionsOpen = false" class="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-gray-300 hover:text-white hover:bg-dark-700 transition-colors">
@@ -137,7 +143,7 @@
                     </button>
                 </div>
                 
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 pt-6 border-t border-dark-600">
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-8 pt-6 border-t border-dark-600">
                     <div>
                         <p class="text-xs text-gray-500 uppercase tracking-wider mb-1">Total Deposits</p>
                         <p class="text-lg font-semibold text-white">${{ number_format($user->deposits->where('status', 'approved')->sum('amount'), 2) }}</p>
@@ -153,6 +159,14 @@
                     <div>
                         <p class="text-xs text-gray-500 uppercase tracking-wider mb-1">Active Invest</p>
                         <p class="text-lg font-semibold text-green-400">${{ number_format($user->investments->where('status', 'active')->sum('amount'), 2) }}</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-gray-500 uppercase tracking-wider mb-1">Sign Up Bonus</p>
+                        <p class="text-lg font-semibold text-amber-400">${{ number_format($user->signup_bonus, 2) }}</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-gray-500 uppercase tracking-wider mb-1">Affiliate Bonus</p>
+                        <p class="text-lg font-semibold text-emerald-400">${{ number_format($user->affiliate_bonus, 2) }}</p>
                     </div>
                 </div>
             </div>
@@ -506,6 +520,61 @@
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
                             Send Email
                         </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Update Bonuses Modal -->
+    <div x-show="bonusModalOpen" class="fixed inset-0 z-50 overflow-y-auto" style="display: none;" aria-labelledby="modal-title-bonus" role="dialog" aria-modal="true">
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            
+            <div x-show="bonusModalOpen" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="fixed inset-0 bg-black/70 backdrop-blur-sm transition-opacity" aria-hidden="true" @click="bonusModalOpen = false"></div>
+
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
+            <div x-show="bonusModalOpen" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100" x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100" x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" class="inline-block align-bottom glass-panel border border-dark-600 rounded-2xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full">
+                
+                <div class="px-6 py-6 border-b border-dark-600 flex items-center justify-between">
+                    <h3 class="text-xl leading-6 font-semibold text-white" id="modal-title-bonus">Update Bonuses</h3>
+                    <button @click="bonusModalOpen = false" class="text-gray-400 hover:text-white transition-colors">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                    </button>
+                </div>
+                
+                <form action="{{ route('admin.users.bonus', $user) }}" method="POST">
+                    @csrf
+                    <div class="px-6 py-6 space-y-5">
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Sign Up Bonus (USD)</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                    <span class="text-gray-500 font-medium">$</span>
+                                </div>
+                                <input type="number" name="signup_bonus" step="0.01" min="0" value="{{ $user->signup_bonus }}" placeholder="0.00" class="w-full bg-dark-800 border border-dark-600 rounded-xl pl-8 pr-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-colors" required>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Affiliate Bonus (USD)</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                    <span class="text-gray-500 font-medium">$</span>
+                                </div>
+                                <input type="number" name="affiliate_bonus" step="0.01" min="0" value="{{ $user->affiliate_bonus }}" placeholder="0.00" class="w-full bg-dark-800 border border-dark-600 rounded-xl pl-8 pr-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-colors" required>
+                            </div>
+                        </div>
+
+                        <div class="bg-dark-800/80 rounded-lg p-4 text-sm text-gray-400">
+                            These bonus values are displayed on the user's dashboard. Changing them updates the displayed amount immediately.
+                        </div>
+                    </div>
+                    
+                    <div class="px-6 py-4 border-t border-dark-600 flex justify-end gap-3 bg-dark-800/30">
+                        <button type="button" @click="bonusModalOpen = false" class="px-4 py-2 bg-dark-700 text-white rounded-lg font-medium hover:bg-dark-600 transition-colors">Cancel</button>
+                        <button type="submit" class="px-6 py-2 bg-amber-500 text-white rounded-lg font-medium hover:bg-amber-400 transition-colors shadow-lg shadow-amber-500/20">Save Bonuses</button>
                     </div>
                 </form>
             </div>

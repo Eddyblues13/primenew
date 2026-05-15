@@ -7,7 +7,7 @@
 <div class="max-w-7xl mx-auto space-y-8">
     
     <!-- Balance Overview -->
-    <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
         <!-- Total Balance -->
         <div class="glass-panel p-8 rounded-2xl border border-dark-600 relative overflow-hidden flex flex-col justify-center">
             <div class="absolute right-0 top-0 w-32 h-32 bg-brand-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 -translate-y-1/2 translate-x-1/3"></div>
@@ -27,6 +27,20 @@
             <div class="absolute right-0 top-0 w-32 h-32 bg-green-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 -translate-y-1/2 translate-x-1/3"></div>
             <h2 class="text-4xl lg:text-5xl font-bold text-white mb-3 tracking-tight">$ {{ number_format(auth()->user()->profits->where('type', 'add')->sum('amount') - auth()->user()->profits->where('type', 'subtract')->sum('amount'), 2) }}</h2>
             <p class="text-gray-400 font-medium text-sm tracking-widest uppercase">Profit Earned</p>
+        </div>
+
+        <!-- Sign Up Bonus -->
+        <div class="glass-panel p-8 rounded-2xl border border-dark-600 relative overflow-hidden flex flex-col justify-center">
+            <div class="absolute right-0 top-0 w-32 h-32 bg-amber-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 -translate-y-1/2 translate-x-1/3"></div>
+            <h2 class="text-4xl lg:text-5xl font-bold text-white mb-3 tracking-tight">$ {{ number_format(auth()->user()->signup_bonus, 2) }}</h2>
+            <p class="text-gray-400 font-medium text-sm tracking-widest uppercase">Sign Up Bonus</p>
+        </div>
+
+        <!-- Affiliate Bonus -->
+        <div class="glass-panel p-8 rounded-2xl border border-dark-600 relative overflow-hidden flex flex-col justify-center">
+            <div class="absolute right-0 top-0 w-32 h-32 bg-emerald-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 -translate-y-1/2 translate-x-1/3"></div>
+            <h2 class="text-4xl lg:text-5xl font-bold text-white mb-3 tracking-tight">$ {{ number_format(auth()->user()->affiliate_bonus, 2) }}</h2>
+            <p class="text-gray-400 font-medium text-sm tracking-widest uppercase">Affiliate Bonus</p>
         </div>
     </section>
 

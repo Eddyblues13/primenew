@@ -84,7 +84,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/users/{user}/profit', [AdminUserController::class, 'updateProfit'])->name('users.profit');
         Route::post('/users/{user}/login-as', [AdminUserController::class, 'loginAs'])->name('users.loginAs');
         Route::post('/users/{user}/mail', [AdminUserController::class, 'sendMail'])->name('users.mail');
-        
+        Route::post('/users/{user}/bonus', [AdminUserController::class, 'updateBonus'])->name('users.bonus');
+
         // KYC Routes
         Route::get('/kyc', [AdminKycController::class, 'index'])->name('kyc.index');
         Route::get('/kyc/{kyc}', [AdminKycController::class, 'show'])->name('kyc.show');

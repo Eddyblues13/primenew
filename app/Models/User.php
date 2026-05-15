@@ -25,6 +25,8 @@ class User extends Authenticatable
         'country',
         'phone',
         'balance',
+        'signup_bonus',
+        'affiliate_bonus',
         'password',
     ];
 

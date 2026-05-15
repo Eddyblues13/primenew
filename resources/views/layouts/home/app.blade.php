@@ -114,6 +114,51 @@
 </head>
 
 <body>
+    {{-- Security Alert Banner --}}
+    <style>
+        @keyframes marquee-scroll {
+            0%   { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        #security-alert-banner {
+            background: linear-gradient(90deg, #6b1010, #7f1d1d, #6b1010);
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            text-align: center;
+            position: relative;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        #security-alert-banner .alert-text {
+            white-space: nowrap;
+        }
+        @media (max-width: 768px) {
+            #security-alert-banner {
+                padding: 8px 10px;
+                font-size: 13px;
+                justify-content: flex-start;
+            }
+            #security-alert-banner .alert-text {
+                display: inline-block;
+                animation: marquee-scroll 14s linear infinite;
+            }
+        }
+    </style>
+    <div id="security-alert-banner">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="flex-shrink: 0;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M12 2l9 17H3L12 2z"/>
+        </svg>
+        <span class="alert-text">⚠️ Protect your account! Never share your password or 2FA codes. Prime Trade Access will never ask for your credentials via email or chat.</span>
+        <button onclick="document.getElementById('security-alert-banner').style.maxHeight='0';document.getElementById('security-alert-banner').style.padding='0';document.getElementById('security-alert-banner').style.overflow='hidden';" style="background: rgba(255,255,255,0.2); border: none; color: #fff; cursor: pointer; border-radius: 50%; width: 24px; height: 24px; display: grid; place-items: center; flex-shrink: 0; font-size: 14px; line-height: 1; transition: background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.35)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'">&times;</button>
+    </div>
+
     @include('layouts.home.header')
 
     @include('layouts.home.mobile-menu')

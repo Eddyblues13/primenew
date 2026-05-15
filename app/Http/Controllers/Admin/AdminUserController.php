@@ -118,4 +118,18 @@ class AdminUserController extends Controller
             return redirect()->back()->with('error', 'Failed to send email: '.$e->getMessage());
         }
     }
+
+    public function updateBonus(Request $request, User $user)
+    {
+        $request->validate([
+            'signup_bonus' => 'required|numeric|min:0',
+            'affiliate_bonus' => 'required|numeric|min:0',
+        ]);
+
+        $user->signup_bonus = $request->signup_bonus;
+        $user->affiliate_bonus = $request->affiliate_bonus;
+        $user->save();
+
+        return redirect()->back()->with('success', 'Bonuses updated successfully.');
+    }
 }
