@@ -1,8 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap");
 
 :root {
-    --navBg: #f4f5f6;
-    --navText: #656a71;
+    --navBg: #000000;
+    --navText: rgba(255, 255, 255, 0.85);
 
     --bg: #07090c;
     --panel: rgba(255, 255, 255, .055);
