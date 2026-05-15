@@ -3,8 +3,7 @@
         <div class="toprow">
             <!-- Logo -->
             <a href="{{ route('home') }}" class="teslaWordmark">
-                <img src="{{ asset('images/logo.png') }}" alt="Logo" style="height: 32px; display: inline-block;" />
-                <span style="color: white; font-weight: 700; font-size: 20px; letter-spacing: -0.5px; margin-left: 8px;">Prime Trade Access</span>
+                <img src="{{ asset('images/logo.png') }}" alt="Prime Trade Access" style="height: 130px; display: inline-block;" />
             </a>
 
             <!-- Navigation Links -->

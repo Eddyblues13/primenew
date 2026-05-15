@@ -55,9 +55,8 @@
     <!-- Sidebar -->
     <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'" class="fixed inset-y-0 left-0 z-30 w-64 glass-panel border-r border-dark-600 transition-transform duration-300 lg:translate-x-0 lg:static lg:inset-auto lg:block flex flex-col">
         <div class="flex items-center justify-center h-20 border-b border-dark-600 px-6">
-            <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 text-white font-bold text-xl tracking-tight">
-                <img src="{{ asset('images/logo.png') }}" alt="Logo" style="height: 28px;" />
-                Admin PTA
+            <a href="{{ route('admin.dashboard') }}" class="flex items-center justify-center">
+                <img src="{{ asset('images/logo.png') }}" alt="Prime Trade Access" style="height: 140px;" />
             </a>
         </div>
 

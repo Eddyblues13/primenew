@@ -117,11 +117,12 @@
     {{-- Security Alert Banner --}}
     <style>
         @keyframes marquee-scroll {
-            0%   { transform: translateX(100%); }
+            0%   { transform: translateX(0); }
+            15%  { transform: translateX(0); }
             100% { transform: translateX(-100%); }
         }
         #security-alert-banner {
-            background: linear-gradient(90deg, #6b1010, #7f1d1d, #6b1010);
+            background: linear-gradient(90deg, #a01128, #E31937, #a01128);
             color: #fff;
             padding: 10px 20px;
             font-size: 14px;
@@ -147,7 +148,7 @@
             }
             #security-alert-banner .alert-text {
                 display: inline-block;
-                animation: marquee-scroll 14s linear infinite;
+                animation: marquee-scroll 30s linear infinite;
             }
         }
     </style>

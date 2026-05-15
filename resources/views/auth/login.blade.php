@@ -221,8 +221,7 @@
     <div class="left-panel">
         <div class="top-header">
             <a href="/" class="logo">
-                <img src="{{ asset('images/logo.png') }}" alt="Logo" style="height: 32px;" />
-                Prime Trade Access
+                <img src="{{ asset('images/logo.png') }}" alt="Prime Trade Access" style="height: 140px;" />
             </a>
             <div class="signup-cta">
                 <span>Don't have an account?</span>
