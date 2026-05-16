@@ -12,13 +12,25 @@
         z-index: 9999;
     }
 
-    /* Hide Google Translate default bar */
-    .goog-te-banner-frame, #goog-gt-tt, .goog-te-balloon-frame {
+    /* Hide ONLY the Google Translate top bar frame, not the widget itself */
+    .goog-te-banner-frame,
+    #goog-gt-tt,
+    .goog-te-balloon-frame {
         display: none !important;
     }
     body { top: 0 !important; }
-    .skiptranslate { display: none !important; }
-    #google_translate_element { display: block !important; }
+
+    /* Hide the top bar injected div but NOT our widget */
+    body > .skiptranslate {
+        display: none !important;
+    }
+    #gt-widget-wrapper,
+    #gt-widget-wrapper * {
+        display: block !important;
+    }
+    #gt-widget-wrapper .skiptranslate {
+        display: block !important;
+    }
 
     /* Style the dropdown */
     #google_translate_element .goog-te-gadget {
@@ -31,7 +43,7 @@
         border: 1px solid rgba(255,255,255,0.15) !important;
         border-radius: 50px !important;
         padding: 8px 16px !important;
-        display: flex !important;
+        display: inline-flex !important;
         align-items: center !important;
         gap: 6px !important;
         cursor: pointer !important;

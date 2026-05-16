@@ -189,7 +189,8 @@
 
         <!-- Header -->
         <header
-            class="h-20 flex items-center justify-between px-6 lg:px-10 z-10 glass-panel border-b border-dark-600 shrink-0">
+            class="h-20 relative flex items-center justify-between px-4 sm:px-6 lg:px-10 z-10 glass-panel border-b border-dark-600 shrink-0">
+            <!-- Left: Hamburger + Title -->
             <div class="flex items-center gap-4">
                 <button @click="sidebarOpen = true" class="lg:hidden text-gray-400 hover:text-white">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -197,26 +198,26 @@
                             d="M4 6h16M4 12h16M4 18h16"></path>
                     </svg>
                 </button>
-                <h1 class="text-xl font-semibold hidden sm:block">@yield('header_title')</h1>
+                <h1 class="text-xl font-semibold hidden lg:block">@yield('header_title')</h1>
             </div>
 
-            <div class="flex items-center gap-6">
-                <!-- Balance Display -->
+            <!-- Center: Logo (mobile only) -->
+            <div class="lg:hidden absolute left-1/2 -translate-x-1/2">
+                <a href="/">
+                    <img src="{{ asset('images/logo.png') }}" alt="Prime Trade Access" class="h-14 object-contain" />
+                </a>
+            </div>
+
+            <!-- Right: Balance, Avatar, Logout -->
+            <div class="flex items-center gap-4 sm:gap-6">
+                <!-- Balance Display (desktop) -->
                 <div class="hidden sm:flex items-center gap-2 bg-dark-800 border border-dark-600 px-4 py-2 rounded-xl">
                     <span class="text-sm text-gray-400">Balance:</span>
                     <span class="font-bold text-white">${{ number_format(auth()->user()->balance ?? 0, 2) }}</span>
                 </div>
 
-                <button class="relative text-gray-400 hover:text-white transition-colors">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9">
-                        </path>
-                    </svg>
-                    <span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
-                </button>
-                <div class="flex items-center gap-3 pl-6 border-l border-dark-600">
-                    <div class="w-10 h-10 rounded-full bg-gradient-to-r from-brand-500 to-blue-500 p-0.5">
+                <div class="flex items-center gap-3 pl-4 sm:pl-6 border-l border-dark-600">
+                    <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gradient-to-r from-brand-500 to-blue-500 p-0.5">
                         <div
                             class="w-full h-full rounded-full bg-dark-800 flex items-center justify-center text-sm font-bold">
                             {{ substr(auth()->user()->name ?? 'A', 0, 1) }}
@@ -228,10 +229,10 @@
                     </div>
                 </div>
                 <!-- Logout Button -->
-                <form method="POST" action="{{ route('logout') }}" class="pl-4 border-l border-dark-600">
+                <form method="POST" action="{{ route('logout') }}" class="pl-2 sm:pl-4 border-l border-dark-600">
                     @csrf
                     <button type="submit"
-                        class="flex items-center gap-2 px-4 py-2 rounded-xl text-gray-400 hover:text-red-400 hover:bg-dark-700 transition-colors text-sm font-medium">
+                        class="flex items-center gap-2 px-2 sm:px-4 py-2 rounded-xl text-gray-400 hover:text-red-400 hover:bg-dark-700 transition-colors text-sm font-medium">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
