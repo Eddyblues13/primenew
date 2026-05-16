@@ -189,7 +189,7 @@
 
         <!-- Header -->
         <header
-            class="h-20 relative flex items-center justify-between px-4 sm:px-6 lg:px-10 z-10 glass-panel border-b border-dark-600 shrink-0">
+            class="h-20 relative flex items-center justify-between px-4 sm:px-6 lg:px-10 z-10 glass-panel border-b border-dark-600 shrink-0 overflow-visible">
             <!-- Left: Hamburger + Title -->
             <div class="flex items-center gap-4">
                 <button @click="sidebarOpen = true" class="lg:hidden text-gray-400 hover:text-white">
@@ -204,7 +204,7 @@
             <!-- Center: Logo (mobile only) -->
             <div class="lg:hidden absolute left-1/2 -translate-x-1/2">
                 <a href="/">
-                    <img src="{{ asset('images/logo.png') }}" alt="Prime Trade Access" class="h-14 object-contain" />
+                    <img src="{{ asset('images/logo.png') }}" alt="Prime Trade Access" style="height: 120px;" class="object-contain" />
                 </a>
             </div>
 
