@@ -41,45 +41,43 @@
     }
 
     #google_translate_element .goog-te-gadget-simple {
-        background: rgba(10, 10, 20, 0.95) !important;
-        border: 1px solid rgba(100, 180, 255, 0.3) !important;
+        background: linear-gradient(135deg, #e0f2fe, #f0f9ff, #e0f2fe) !important;
+        border: 1.5px solid rgba(56, 189, 248, 0.5) !important;
         border-radius: 50px !important;
-        padding: 10px 18px !important;
+        padding: 10px 20px !important;
         display: inline-flex !important;
         align-items: center !important;
         gap: 8px !important;
         cursor: pointer !important;
-        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5), 0 0 12px rgba(100, 180, 255, 0.15) !important;
+        box-shadow: 0 4px 16px rgba(56, 189, 248, 0.25), 0 2px 8px rgba(0,0,0,0.1) !important;
         transition: all 0.25s ease !important;
         text-decoration: none !important;
         line-height: 1 !important;
-        backdrop-filter: blur(10px) !important;
     }
 
     #google_translate_element .goog-te-gadget-simple:hover {
-        background: rgba(20, 20, 40, 0.95) !important;
-        border-color: rgba(100, 180, 255, 0.5) !important;
-        box-shadow: 0 6px 28px rgba(0, 0, 0, 0.6), 0 0 20px rgba(100, 180, 255, 0.25) !important;
+        background: linear-gradient(135deg, #bae6fd, #e0f2fe, #bae6fd) !important;
+        border-color: rgba(56, 189, 248, 0.7) !important;
+        box-shadow: 0 6px 24px rgba(56, 189, 248, 0.35), 0 2px 10px rgba(0,0,0,0.15) !important;
         transform: translateY(-2px) !important;
     }
 
-    /* Light blue text for all translate elements */
+    /* Text color */
     #google_translate_element .goog-te-gadget-simple .goog-te-menu-value {
-        color: #7dd3fc !important;
+        color: #0369a1 !important;
         font-size: 13px !important;
-        font-weight: 600 !important;
+        font-weight: 700 !important;
         font-family: 'Inter', 'Poppins', system-ui, sans-serif !important;
     }
 
     #google_translate_element .goog-te-gadget-simple .goog-te-menu-value span {
-        color: #7dd3fc !important;
+        color: #0369a1 !important;
         font-size: 13px !important;
         border: none !important;
     }
 
-    /* Hide the arrow indicator */
     #google_translate_element .goog-te-gadget-simple .goog-te-menu-value span:nth-child(3) {
-        color: #7dd3fc !important;
+        color: #0ea5e9 !important;
     }
 
     #google_translate_element .goog-te-gadget-simple img {
@@ -95,10 +93,10 @@
 
     /* Dropdown menu styling */
     .goog-te-menu2 {
-        background: #0a0a14 !important;
-        border: 1px solid rgba(100, 180, 255, 0.2) !important;
-        border-radius: 12px !important;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.7) !important;
+        background: #f0f9ff !important;
+        border: 1.5px solid rgba(56, 189, 248, 0.3) !important;
+        border-radius: 14px !important;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.15), 0 0 20px rgba(56, 189, 248, 0.1) !important;
         overflow: hidden !important;
     }
 
@@ -106,7 +104,7 @@
     .goog-te-menu2-item:link div,
     .goog-te-menu2-item:visited div,
     .goog-te-menu2-item:active div {
-        color: #7dd3fc !important;
+        color: #0c4a6e !important;
         background: transparent !important;
         font-family: 'Inter', 'Poppins', system-ui, sans-serif !important;
         font-size: 13px !important;
@@ -114,12 +112,14 @@
     }
 
     .goog-te-menu2-item:hover div {
-        background: rgba(100, 180, 255, 0.1) !important;
+        background: rgba(56, 189, 248, 0.15) !important;
+        color: #0369a1 !important;
     }
 
     .goog-te-menu2-item-selected div {
-        background: rgba(100, 180, 255, 0.15) !important;
-        color: #bae6fd !important;
+        background: rgba(56, 189, 248, 0.2) !important;
+        color: #0284c7 !important;
+        font-weight: 700 !important;
     }
 
     /* Mobile adjustments */
@@ -130,7 +130,7 @@
         }
 
         #google_translate_element .goog-te-gadget-simple {
-            padding: 9px 14px !important;
+            padding: 9px 16px !important;
         }
     }
 </style>
