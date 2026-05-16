@@ -295,6 +295,8 @@
             setInterval(showDualNotification, 10000); // Repeat every 10s
         });
     </script>
+
+    @include('components.google-translate')
 </body>
 
 </html>

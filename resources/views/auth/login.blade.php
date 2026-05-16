@@ -291,5 +291,7 @@
             }
         });
     </script>
+
+    @include('components.google-translate')
 </body>
 </html>

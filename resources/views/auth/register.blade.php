@@ -364,5 +364,7 @@
         toggleEye('eye-pwd', 'password');
         toggleEye('eye-conf', 'password_conf');
     </script>
+
+    @include('components.google-translate')
 </body>
 </html>
