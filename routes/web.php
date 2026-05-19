@@ -75,7 +75,62 @@ Route::get('/', function () {
         return [];
     });
 
-    return view('welcome', compact('teslaPlans', 'cryptoPlans', 'liveNews'));
+    // Populate Featured Cars from public/cars/cars directory
+    $featuredCars = [];
+    $carFolders = [1, 2, 3, 4, 5, 7];
+    $carNames = [
+        1 => 'Tesla Model S Plaid',
+        2 => 'Tesla Model 3 Performance',
+        3 => 'Tesla Model X Long Range',
+        4 => 'Tesla Model Y Dual Motor',
+        5 => 'Cybertruck Tri-Motor',
+        7 => 'Tesla Roadster SpaceX'
+    ];
+    $carSpecs = [
+        1 => ['range' => 396, 'zero_to_sixty' => 1.99, 'top_speed' => 200, 'price' => 89990],
+        2 => ['range' => 315, 'zero_to_sixty' => 3.1, 'top_speed' => 162, 'price' => 50990],
+        3 => ['range' => 348, 'zero_to_sixty' => 3.8, 'top_speed' => 149, 'price' => 98490],
+        4 => ['range' => 330, 'zero_to_sixty' => 4.8, 'top_speed' => 135, 'price' => 47990],
+        5 => ['range' => 500, 'zero_to_sixty' => 2.9, 'top_speed' => 130, 'price' => 69900],
+        7 => ['range' => 620, 'zero_to_sixty' => 1.9, 'top_speed' => 250, 'price' => 200000]
+    ];
+
+    foreach ($carFolders as $folder) {
+        $path = public_path("cars/cars/{$folder}");
+        $image = 'images/logo.png';
+        if (file_exists($path)) {
+            $files = array_values(array_filter(scandir($path), function($f) {
+                return !in_array($f, ['.', '..']);
+            }));
+            if (!empty($files)) {
+                $image = "cars/cars/{$folder}/" . $files[0];
+            }
+        }
+        
+        $featuredCars[] = new class($carNames[$folder], $carSpecs[$folder], $image) {
+            public $name;
+            public $range_miles;
+            public $zero_to_sixty;
+            public $top_speed_mph;
+            public $price;
+            private $image;
+
+            public function __construct($name, $specs, $image) {
+                $this->name = $name;
+                $this->range_miles = $specs['range'];
+                $this->zero_to_sixty = $specs['zero_to_sixty'];
+                $this->top_speed_mph = $specs['top_speed'];
+                $this->price = $specs['price'];
+                $this->image = $image;
+            }
+
+            public function getPrimaryImage() {
+                return $this->image;
+            }
+        };
+    }
+
+    return view('welcome', compact('teslaPlans', 'cryptoPlans', 'liveNews', 'featuredCars'));
 })->name('home');
 
 Route::get('/products', [FrontendController::class, 'products'])->name('frontend.products');
