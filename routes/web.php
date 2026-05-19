@@ -26,18 +26,51 @@ Route::get('/', function () {
     $teslaPlans = InvestmentPlan::where('type', 'tesla')->get();
     $cryptoPlans = InvestmentPlan::where('type', 'crypto')->get();
 
-    // Fetch live news from CryptoCompare API (Free, no key required for basic limits)
-    $liveNews = Illuminate\Support\Facades\Cache::remember('homepage_live_news', 3600, function () {
+    // Fetch live news from CoinTelegraph RSS feed (Free, no rate limits)
+    $liveNews = Illuminate\Support\Facades\Cache::remember('homepage_live_news_rss', 3600, function () {
         try {
-            $response = Illuminate\Support\Facades\Http::timeout(5)->get('https://min-api.cryptocompare.com/data/v2/news/?lang=EN');
-            if ($response->successful()) {
-                $data = $response->json();
-                if (isset($data['Data']) && is_array($data['Data'])) {
-                    return array_slice($data['Data'], 0, 6); // Keep top 6 news items
+            $rssContent = @file_get_contents('https://cointelegraph.com/rss');
+            if ($rssContent) {
+                $xml = simplexml_load_string($rssContent);
+                $news = [];
+                if ($xml && isset($xml->channel->item)) {
+                    $items = $xml->channel->item;
+                    $count = 0;
+                    foreach ($items as $item) {
+                        if ($count >= 6) break;
+                        
+                        $image = '';
+                        $namespaces = $xml->getNamespaces(true);
+                        if (isset($namespaces['media'])) {
+                            $media = $item->children($namespaces['media']);
+                            if (isset($media->content)) {
+                                foreach ($media->content->attributes() as $k => $v) {
+                                    if ($k == 'url') $image = (string)$v;
+                                }
+                            }
+                        }
+                        
+                        if (empty($image) && isset($item->enclosure)) {
+                            foreach ($item->enclosure->attributes() as $k => $v) {
+                                if ($k == 'url') $image = (string)$v;
+                            }
+                        }
+
+                        $news[] = [
+                            'title' => (string)$item->title,
+                            'url' => (string)$item->link,
+                            'source_info' => ['name' => 'CoinTelegraph'],
+                            'published_on' => strtotime((string)$item->pubDate),
+                            'imageurl' => $image,
+                            'body' => strip_tags((string)$item->description)
+                        ];
+                        $count++;
+                    }
+                    return $news;
                 }
             }
         } catch (\Exception $e) {
-            // Silently fail and return empty array if API is down
+            // Silently fail and return empty array if RSS is down
         }
         return [];
     });
