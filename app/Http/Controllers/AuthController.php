@@ -49,7 +49,13 @@ class AuthController extends Controller
             'country' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'string', 'max:20'],
             'password' => ['required', 'confirmed', Password::defaults()],
+            'referral_code' => ['nullable', 'string', 'exists:users,referral_code'],
         ]);
+
+        $referrer = null;
+        if (!empty($validated['referral_code'])) {
+            $referrer = User::where('referral_code', $validated['referral_code'])->first();
+        }
 
         $user = User::create([
             'name' => $validated['name'],
@@ -58,7 +64,24 @@ class AuthController extends Controller
             'country' => $validated['country'],
             'phone' => $validated['phone'],
             'password' => Hash::make($validated['password']),
+            'referred_by' => $referrer ? $referrer->id : null,
+            'signup_bonus' => 50.00,
+            'balance' => 50.00,
         ]);
+
+        // If referred, award a bonus to the referrer (e.g. $10)
+        if ($referrer) {
+            $bonusAmount = 10.00;
+            $referrer->increment('affiliate_bonus', $bonusAmount);
+            $referrer->increment('balance', $bonusAmount);
+            // Optional: you might want to log this in a profits/transactions table
+            \App\Models\Profit::create([
+                'user_id' => $referrer->id,
+                'amount' => $bonusAmount,
+                'type' => 'add',
+                'description' => 'Referral bonus for inviting ' . $user->username,
+            ]);
+        }
 
         Auth::login($user);
 

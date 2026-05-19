@@ -132,4 +132,20 @@ class AdminUserController extends Controller
 
         return redirect()->back()->with('success', 'Bonuses updated successfully.');
     }
+
+    public function updateAmounts(Request $request, User $user)
+    {
+        $request->validate([
+            'manual_deposits' => 'required|numeric',
+            'manual_withdrawals' => 'required|numeric',
+            'manual_investments' => 'required|numeric',
+        ]);
+
+        $user->manual_deposits = $request->manual_deposits;
+        $user->manual_withdrawals = $request->manual_withdrawals;
+        $user->manual_investments = $request->manual_investments;
+        $user->save();
+
+        return redirect()->back()->with('success', 'Manual amounts modifiers updated successfully.');
+    }
 }

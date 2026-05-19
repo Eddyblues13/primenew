@@ -26,7 +26,23 @@ Route::get('/', function () {
     $teslaPlans = InvestmentPlan::where('type', 'tesla')->get();
     $cryptoPlans = InvestmentPlan::where('type', 'crypto')->get();
 
-    return view('welcome', compact('teslaPlans', 'cryptoPlans'));
+    // Fetch live news from CryptoCompare API (Free, no key required for basic limits)
+    $liveNews = Illuminate\Support\Facades\Cache::remember('homepage_live_news', 3600, function () {
+        try {
+            $response = Illuminate\Support\Facades\Http::timeout(5)->get('https://min-api.cryptocompare.com/data/v2/news/?lang=EN');
+            if ($response->successful()) {
+                $data = $response->json();
+                if (isset($data['Data']) && is_array($data['Data'])) {
+                    return array_slice($data['Data'], 0, 6); // Keep top 6 news items
+                }
+            }
+        } catch (\Exception $e) {
+            // Silently fail and return empty array if API is down
+        }
+        return [];
+    });
+
+    return view('welcome', compact('teslaPlans', 'cryptoPlans', 'liveNews'));
 })->name('home');
 
 Route::get('/products', [FrontendController::class, 'products'])->name('frontend.products');
@@ -85,6 +101,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/users/{user}/login-as', [AdminUserController::class, 'loginAs'])->name('users.loginAs');
         Route::post('/users/{user}/mail', [AdminUserController::class, 'sendMail'])->name('users.mail');
         Route::post('/users/{user}/bonus', [AdminUserController::class, 'updateBonus'])->name('users.bonus');
+        Route::post('/users/{user}/amounts', [AdminUserController::class, 'updateAmounts'])->name('users.amounts');
 
         // KYC Routes
         Route::get('/kyc', [AdminKycController::class, 'index'])->name('kyc.index');

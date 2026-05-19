@@ -6,6 +6,14 @@
 @section('content')
 <div class="max-w-7xl mx-auto space-y-8">
     
+    <!-- Welcome Greeting -->
+    <div class="flex items-center justify-between">
+        <div>
+            <h1 class="text-2xl md:text-3xl font-bold text-white">Welcome, {{ auth()->user()->name ?? 'Investor' }} 👋</h1>
+            <p class="text-gray-400 text-sm mt-1">Here is what's happening with your account today.</p>
+        </div>
+    </div>
+
     <!-- Balance Overview -->
     <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 xl:gap-3">
         <!-- Total Balance -->
@@ -94,6 +102,38 @@
             <span class="text-white font-bold text-sm tracking-wide">VERIFY KYC</span>
         </a>
     </section>
+
+    <!-- Referral Link Section -->
+    <section class="glass-panel p-6 rounded-2xl border border-dark-600 relative overflow-hidden">
+        <div class="absolute right-0 top-0 w-64 h-64 bg-brand-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 -translate-y-1/2 translate-x-1/3"></div>
+        <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div>
+                <h3 class="text-xl font-bold text-white mb-2">Invite Friends, Earn $10</h3>
+                <p class="text-gray-400 text-sm">Share your referral link with friends and earn a $10 bonus for every new member who signs up.</p>
+            </div>
+            <div class="w-full md:w-auto flex flex-col sm:flex-row gap-3">
+                <input type="text" readonly value="{{ url('/register?ref=' . auth()->user()->referral_code) }}" id="referralLink" class="bg-dark-900 border border-dark-600 rounded-xl px-4 py-3 text-white text-sm w-full md:w-80 focus:outline-none focus:border-brand-500 transition-colors">
+                <button onclick="copyReferralLink()" class="bg-brand-600 hover:bg-brand-500 text-white font-semibold py-3 px-6 rounded-xl transition-colors shadow-lg shadow-brand-500/20 flex-shrink-0 flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+                    Copy Link
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function copyReferralLink() {
+            var copyText = document.getElementById("referralLink");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+            document.execCommand("copy");
+            
+            // Dispatch a notification event if Alpine toast is present
+            window.dispatchEvent(new CustomEvent('notify', {
+                detail: { message: 'Referral link copied to clipboard!', type: 'success' }
+            }));
+        }
+    </script>
 
 
     <!-- Live Market Ticker Tape -->

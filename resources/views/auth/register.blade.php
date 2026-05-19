@@ -298,6 +298,11 @@
                         <input type="tel" name="phone" class="form-input" required>
                     </div>
                 </div>
+                
+                <div class="form-group">
+                    <label class="form-label">REFERRAL CODE (OPTIONAL)</label>
+                    <input type="text" name="referral_code" class="form-input" value="{{ request('ref') }}">
+                </div>
 
                 <div class="form-row">
                     <div class="form-group" x-data="{ show: false }">

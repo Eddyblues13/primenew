@@ -244,6 +244,94 @@
     </div>
 </section>
 
+<!-- ===================================================== -->
+<!-- PRIME TRADE OVERVIEW -->
+<!-- ===================================================== -->
+<section class="bg-white py-16 border-t border-[#E31937]/10">
+    <div class="wrap">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-[32px] md:text-[40px] font-[900] tracking-[-.02em] text-[#0f1115] text-center mb-8">
+                Prime Trade Overview <span class="text-[#E31937]">•</span>
+            </h2>
+
+            <div class="space-y-10">
+                <!-- Overview Text -->
+                <p class="text-[16px] md:text-[18px] text-black/70 leading-relaxed text-center">
+                    Prime Trade is an online world trade platform where investors are allowed to invest and expect gain on every trade they invest in.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+                    <!-- 100% Legit -->
+                    <div class="glass soft p-8 rounded-[24px] border border-black/5 bg-[#f8f9fa] hover:border-[#E31937]/30 transition-colors shadow-sm">
+                        <h3 class="text-[20px] font-[900] text-[#0f1115] mb-4 flex items-center gap-3">
+                            <span class="text-[#E31937]">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                </svg>
+                            </span>
+                            100% Legit & Guaranteed
+                        </h3>
+                        <p class="text-[15px] text-black/60 leading-relaxed">
+                            It is <strong>100% legit</strong>. Other brokers will tell you 60%, but as expert traders we have developed a technique which is <strong>100% accurate</strong> when handled by me and my team members on our trading platform using our newly developed <strong>Autorobot software</strong>, which guarantees 100% winning all the time.
+                        </p>
+                    </div>
+
+                    <!-- Proven Strategy -->
+                    <div class="glass soft p-8 rounded-[24px] border border-black/5 bg-[#f8f9fa] hover:border-[#E31937]/30 transition-colors shadow-sm">
+                        <h3 class="text-[20px] font-[900] text-[#0f1115] mb-4 flex items-center gap-3">
+                            <span class="text-[#E31937]">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                                </svg>
+                            </span>
+                            Proven Strategy
+                        </h3>
+                        <p class="text-[15px] text-black/60 leading-relaxed">
+                            I have been using this strategy for more than four years now and it still works <strong>100% risk free and safe</strong>.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- How It Works Table/List -->
+                <div class="mt-12 rounded-[24px] border border-black/10 overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.04)] bg-white">
+                    <h3 class="text-[22px] font-[900] text-[#0f1115] p-6 border-b border-black/10 bg-[#f8f9fa]">
+                        How It Works <span class="text-[#E31937]">•</span>
+                    </h3>
+                    <div class="divide-y divide-black/5">
+                        <!-- Step 1 -->
+                        <div class="flex items-center p-5 hover:bg-[#f8f9fa] transition-colors bg-[#f0f7ff]">
+                            <div class="w-10 h-10 rounded-full bg-[#E31937]/10 text-[#E31937] flex items-center justify-center font-[900] flex-shrink-0 mr-4">1</div>
+                            <div class="text-[15px] text-black/80">You invest a certain amount of money or commodity.</div>
+                        </div>
+                        <!-- Step 2 -->
+                        <div class="flex items-center p-5 hover:bg-[#f8f9fa] transition-colors">
+                            <div class="w-10 h-10 rounded-full bg-black/5 text-black/50 flex items-center justify-center font-[900] flex-shrink-0 mr-4">2</div>
+                            <div class="text-[15px] text-black/80">We trade with our automated software on your behalf.</div>
+                        </div>
+                        <!-- Step 3 -->
+                        <div class="flex items-center p-5 hover:bg-[#f8f9fa] transition-colors">
+                            <div class="w-10 h-10 rounded-full bg-black/5 text-black/50 flex items-center justify-center font-[900] flex-shrink-0 mr-4">3</div>
+                            <div class="text-[15px] text-black/80">We manage and grow your account.</div>
+                        </div>
+                        <!-- Step 4 -->
+                        <div class="flex items-center p-5 hover:bg-[#f8f9fa] transition-colors">
+                            <div class="w-10 h-10 rounded-full bg-black/5 text-black/50 flex items-center justify-center font-[900] flex-shrink-0 mr-4">4</div>
+                            <div class="text-[15px] text-black/80">You make great profit in return.</div>
+                        </div>
+                        <!-- Step 5 -->
+                        <div class="flex items-center p-5 hover:bg-[#f8f9fa] transition-colors">
+                            <div class="w-10 h-10 rounded-full bg-black/5 text-black/50 flex items-center justify-center font-[900] flex-shrink-0 mr-4">5</div>
+                            <div class="text-[15px] text-black/80">We are entitled to <strong>10% of your profit</strong> after your trade process is complete.</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Investment Plans section -->
 <section class="bg-[#07090c] border-t border-[#E31937]/20">
     <div class="wrap py-14">
@@ -562,125 +650,41 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- News Card 1 -->
+            @forelse($liveNews ?? [] as $article)
             <div
                 class="rounded-[18px] border border-black/10 bg-white overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.08)] hover:shadow-[0_15px_40px_rgba(227,25,55,0.15)] hover:border-[#E31937]/30 transition">
-                <div class="h-[200px] bg-[#f3f4f6] relative">
-                    <div class="absolute top-3 left-3 w-2 h-2 rounded-full bg-[#E31937]"></div>
-                    <img src="{{ asset('images/news-1.jpg') }}" alt="News" class="w-full h-full object-cover"
-                        loading="lazy" />
+                <div class="h-[200px] bg-[#f3f4f6] relative overflow-hidden">
+                    <div class="absolute top-3 left-3 w-2 h-2 rounded-full bg-[#E31937] z-10 shadow-[0_0_10px_rgba(227,25,55,0.8)]"></div>
+                    <img src="{{ $article['imageurl'] ?? asset('images/logo.png') }}" alt="{{ $article['title'] ?? 'News' }}" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
+                        loading="lazy" onerror="this.src='{{ asset('images/logo.png') }}'" />
                 </div>
-                <div class="p-5">
-                    <div class="text-[12px] font-[700] text-[#E31937] mb-2">January 26, 2026</div>
-                    <h3 class="text-[18px] font-[900] tracking-[-.01em] text-[#0f1115] mb-3">
-                        Tesla Announces Record-Breaking Q4 Deliveries
+                <div class="p-5 flex flex-col h-[calc(100%-200px)]">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="text-[12px] font-[700] text-[#E31937] uppercase tracking-wider">{{ $article['source_info']['name'] ?? ($article['source'] ?? 'Crypto News') }}</div>
+                        <div class="text-[11px] font-[600] text-black/40">{{ isset($article['published_on']) ? \Carbon\Carbon::createFromTimestamp($article['published_on'])->diffForHumans() : '' }}</div>
+                    </div>
+                    <h3 class="text-[17px] font-[900] tracking-[-.01em] text-[#0f1115] mb-3 line-clamp-2 leading-tight">
+                        <a href="{{ $article['url'] ?? '#' }}" target="_blank" class="hover:text-[#E31937] transition-colors">
+                            {{ $article['title'] ?? 'Crypto Market Update' }}
+                        </a>
                     </h3>
-                    <p class="text-[14px] text-black/60 leading-relaxed">
-                        Tesla delivered over 1.8 million vehicles in Q4 2025, marking another record quarter and
-                        demonstrating strong global demand for electric vehicles.
+                    <p class="text-[14px] text-black/60 leading-relaxed line-clamp-3 mb-4 flex-grow">
+                        {{ \Illuminate\Support\Str::limit(strip_tags($article['body'] ?? ''), 120) }}
                     </p>
+                    <a href="{{ $article['url'] ?? '#' }}" target="_blank" class="text-[13px] font-[800] text-[#E31937] hover:opacity-80 inline-flex items-center gap-1 mt-auto">
+                        Read full story
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14"></path>
+                            <path d="M12 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
                 </div>
             </div>
-
-            <!-- News Card 2 -->
-            <div
-                class="rounded-[18px] border border-black/10 bg-white overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.08)] hover:shadow-[0_15px_40px_rgba(227,25,55,0.15)] hover:border-[#E31937]/30 transition">
-                <div class="h-[200px] bg-[#f3f4f6] relative">
-                    <div class="absolute top-3 left-3 w-2 h-2 rounded-full bg-[#E31937]"></div>
-                    <img src="{{ asset('images/news-2.jpg') }}" alt="News" class="w-full h-full object-cover"
-                        loading="lazy" />
-                </div>
-                <div class="p-5">
-                    <div class="text-[12px] font-[700] text-[#E31937] mb-2">January 20, 2026</div>
-                    <h3 class="text-[18px] font-[900] tracking-[-.01em] text-[#0f1115] mb-3">
-                        New Supercharger Network Expansion
-                    </h3>
-                    <p class="text-[14px] text-black/60 leading-relaxed">
-                        Tesla continues to expand its Supercharger network globally, adding 500 new locations to make
-                        long-distance travel even more convenient for EV owners.
-                    </p>
-                </div>
+            @empty
+            <div class="col-span-3 text-center py-12 text-[14px] text-black/50">
+                Fetching latest market news...
             </div>
-
-            <!-- News Card 3 -->
-            <div
-                class="rounded-[18px] border border-black/10 bg-white overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.08)] hover:shadow-[0_15px_40px_rgba(227,25,55,0.15)] hover:border-[#E31937]/30 transition">
-                <div class="h-[200px] bg-[#f3f4f6] relative">
-                    <div class="absolute top-3 left-3 w-2 h-2 rounded-full bg-[#E31937]"></div>
-                    <img src="{{ asset('images/news-3.jpg') }}" alt="News" class="w-full h-full object-cover"
-                        loading="lazy" />
-                </div>
-                <div class="p-5">
-                    <div class="text-[12px] font-[700] text-[#E31937] mb-2">January 15, 2026</div>
-                    <h3 class="text-[18px] font-[900] tracking-[-.01em] text-[#0f1115] mb-3">
-                        Full Self-Driving Beta Reaches New Milestone
-                    </h3>
-                    <p class="text-[14px] text-black/60 leading-relaxed">
-                        Tesla's Full Self-Driving Beta v12.5 now available to over 500,000 users, showcasing significant
-                        improvements in autonomous driving capabilities.
-                    </p>
-                </div>
-            </div>
-
-            <!-- News Card 4 -->
-            <div
-                class="rounded-[18px] border border-black/10 bg-white overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.08)] hover:shadow-[0_15px_40px_rgba(227,25,55,0.15)] hover:border-[#E31937]/30 transition">
-                <div class="h-[200px] bg-[#f3f4f6] relative">
-                    <div class="absolute top-3 left-3 w-2 h-2 rounded-full bg-[#E31937]"></div>
-                    <img src="{{ asset('images/news-4.jpg') }}" alt="News" class="w-full h-full object-cover"
-                        loading="lazy" />
-                </div>
-                <div class="p-5">
-                    <div class="text-[12px] font-[700] text-[#E31937] mb-2">January 10, 2026</div>
-                    <h3 class="text-[18px] font-[900] tracking-[-.01em] text-[#0f1115] mb-3">
-                        Cybertruck Production Ramps Up
-                    </h3>
-                    <p class="text-[14px] text-black/60 leading-relaxed">
-                        Tesla's revolutionary Cybertruck production reaches new heights with increased manufacturing
-                        capacity at Giga Texas facility.
-                    </p>
-                </div>
-            </div>
-
-            <!-- News Card 5 -->
-            <div
-                class="rounded-[18px] border border-black/10 bg-white overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.08)] hover:shadow-[0_15px_40px_rgba(227,25,55,0.15)] hover:border-[#E31937]/30 transition">
-                <div class="h-[200px] bg-[#f3f4f6] relative">
-                    <div class="absolute top-3 left-3 w-2 h-2 rounded-full bg-[#E31937]"></div>
-                    <img src="{{ asset('images/news-1.jpg') }}" alt="News" class="w-full h-full object-cover"
-                        loading="lazy" />
-                </div>
-                <div class="p-5">
-                    <div class="text-[12px] font-[700] text-[#E31937] mb-2">January 5, 2026</div>
-                    <h3 class="text-[18px] font-[900] tracking-[-.01em] text-[#0f1115] mb-3">
-                        Energy Storage Solutions Expand Globally
-                    </h3>
-                    <p class="text-[14px] text-black/60 leading-relaxed">
-                        Tesla Energy announces major expansion of Megapack installations worldwide, supporting the
-                        transition to renewable energy infrastructure.
-                    </p>
-                </div>
-            </div>
-
-            <!-- News Card 6 -->
-            <div
-                class="rounded-[18px] border border-black/10 bg-white overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.08)] hover:shadow-[0_15px_40px_rgba(227,25,55,0.15)] hover:border-[#E31937]/30 transition">
-                <div class="h-[200px] bg-[#f3f4f6] relative">
-                    <div class="absolute top-3 left-3 w-2 h-2 rounded-full bg-[#E31937]"></div>
-                    <img src="{{ asset('images/news-2.jpg') }}" alt="News" class="w-full h-full object-cover"
-                        loading="lazy" />
-                </div>
-                <div class="p-5">
-                    <div class="text-[12px] font-[700] text-[#E31937] mb-2">December 30, 2025</div>
-                    <h3 class="text-[18px] font-[900] tracking-[-.01em] text-[#0f1115] mb-3">
-                        Model Y Becomes World's Best-Selling EV
-                    </h3>
-                    <p class="text-[14px] text-black/60 leading-relaxed">
-                        Tesla Model Y maintains its position as the world's best-selling electric vehicle, with over 1.2
-                        million units delivered in 2025.
-                    </p>
-                </div>
-            </div>
+            @endforelse
         </div>
     </div>
 </section>

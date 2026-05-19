@@ -7,6 +7,7 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -28,7 +29,32 @@ class User extends Authenticatable
         'signup_bonus',
         'affiliate_bonus',
         'password',
+        'referral_code',
+        'referred_by',
+        'manual_deposits',
+        'manual_withdrawals',
+        'manual_investments',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($user) {
+            if (empty($user->referral_code)) {
+                $user->referral_code = static::generateReferralCode();
+            }
+        });
+    }
+
+    protected static function generateReferralCode()
+    {
+        do {
+            $code = strtoupper(Str::random(8));
+        } while (static::where('referral_code', $code)->exists());
+
+        return $code;
+    }
 
     /**
      * The attributes that should be hidden for serialization.
