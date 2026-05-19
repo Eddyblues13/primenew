@@ -242,7 +242,5 @@
     @endif
 
     @stack('scripts')
-
-    @include('components.google-translate')
 </body>
 </html>

@@ -157,9 +157,9 @@
             </div>
 
             <div class="flex items-center gap-2 mt-4 pt-4 border-t border-dark-600">
-                <a href="{{ route('admin.users.show', $user) }}" class="flex-1 flex items-center justify-center gap-2 py-2 bg-dark-700 hover:bg-dark-600 text-white rounded-lg transition-colors text-sm font-medium">
+                <a href="{{ route('admin.users.show', $user) }}" class="flex-1 flex items-center justify-center gap-2 py-2.5 bg-brand-500 hover:bg-brand-400 text-white rounded-lg transition-colors text-sm font-bold shadow-lg shadow-brand-500/20">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
-                    View
+                    View User
                 </a>
                 <form action="{{ route('admin.users.destroy', $user) }}" method="POST" class="flex-1" onsubmit="return confirm('Are you sure you want to delete this user?');">
                     @csrf
