@@ -8,7 +8,17 @@ We have received your withdrawal request. Please note that an administrator must
 **Withdrawal Details:**
 - **Amount:** ${{ number_format($withdrawal->amount, 2) }}
 - **Method:** {{ strtoupper($withdrawal->method) }}
+@if(\Illuminate\Support\Str::startsWith($withdrawal->destination, '{') && ($decoded = json_decode($withdrawal->destination, true)))
+- **Bank Name:** {{ $decoded['bank_name'] ?? '' }}
+- **Account Holder:** {{ $decoded['account_name'] ?? '' }}
+- **Account Number/IBAN:** {{ $decoded['account_number'] ?? '' }}
+- **Routing Number/SWIFT/BIC:** {{ $decoded['routing_number'] ?? '' }}
+@if(!empty($decoded['bank_address']))
+- **Bank Branch Address:** {{ $decoded['bank_address'] ?? '' }}
+@endif
+@else
 - **Destination Address/Account:** {{ $withdrawal->destination }}
+@endif
 - **Status:** Pending Approval
 - **Date:** {{ $withdrawal->created_at->format('M d, Y h:i A') }}
 

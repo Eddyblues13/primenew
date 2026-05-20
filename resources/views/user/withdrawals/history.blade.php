@@ -57,9 +57,21 @@
                             <div class="text-slate-300 font-medium">{{ strtoupper($withdrawal->method) }}</div>
                         </td>
                         <td class="px-4 py-4">
-                            <div class="text-slate-400 font-mono text-xs max-w-xs truncate" title="{{ $withdrawal->destination }}">
-                                {{ $withdrawal->destination }}
-                            </div>
+                            @if(\Illuminate\Support\Str::startsWith($withdrawal->destination, '{') && ($decoded = json_decode($withdrawal->destination, true)))
+                                <div class="space-y-1 text-xs text-slate-300">
+                                    <div><span class="text-slate-500 font-semibold uppercase text-[10px] tracking-wider">Bank:</span> {{ $decoded['bank_name'] ?? '' }}</div>
+                                    <div><span class="text-slate-500 font-semibold uppercase text-[10px] tracking-wider">Holder:</span> {{ $decoded['account_name'] ?? '' }}</div>
+                                    <div><span class="text-slate-500 font-semibold uppercase text-[10px] tracking-wider">Acc/IBAN:</span> {{ $decoded['account_number'] ?? '' }}</div>
+                                    <div><span class="text-slate-500 font-semibold uppercase text-[10px] tracking-wider">Routing:</span> {{ $decoded['routing_number'] ?? '' }}</div>
+                                    @if(!empty($decoded['bank_address']))
+                                        <div><span class="text-slate-500 font-semibold uppercase text-[10px] tracking-wider">Branch:</span> {{ $decoded['bank_address'] ?? '' }}</div>
+                                    @endif
+                                </div>
+                            @else
+                                <div class="text-slate-400 font-mono text-xs max-w-xs truncate" title="{{ $withdrawal->destination }}">
+                                    {{ $withdrawal->destination }}
+                                </div>
+                            @endif
                         </td>
                         <td class="px-4 py-4 whitespace-nowrap">
                             <div class="text-white font-medium">${{ number_format($withdrawal->amount, 2) }}</div>

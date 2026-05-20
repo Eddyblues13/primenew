@@ -298,7 +298,22 @@
                                     @foreach($user->withdrawals()->latest()->get() as $withdrawal)
                                     <tr class="border-b border-dark-600">
                                         <td class="px-4 py-3 text-gray-300">{{ $withdrawal->created_at->format('M d, Y h:i A') }}</td>
-                                        <td class="px-4 py-3 text-white">{{ strtoupper($withdrawal->method) }}<br><span class="text-xs text-gray-500">{{ $withdrawal->destination }}</span></td>
+                                        <td class="px-4 py-3 text-white">
+                                            <div class="font-medium text-xs mb-1">{{ strtoupper($withdrawal->method) }}</div>
+                                            @if(\Illuminate\Support\Str::startsWith($withdrawal->destination, '{') && ($decoded = json_decode($withdrawal->destination, true)))
+                                                <div class="space-y-0.5 text-[11px] text-gray-400">
+                                                    <div><span class="text-gray-600 font-medium">Bank:</span> {{ $decoded['bank_name'] ?? '' }}</div>
+                                                    <div><span class="text-gray-600 font-medium">Holder:</span> {{ $decoded['account_name'] ?? '' }}</div>
+                                                    <div><span class="text-gray-600 font-medium">Acc:</span> {{ $decoded['account_number'] ?? '' }}</div>
+                                                    <div><span class="text-gray-600 font-medium">Rout/SWIFT:</span> {{ $decoded['routing_number'] ?? '' }}</div>
+                                                    @if(!empty($decoded['bank_address']))
+                                                        <div><span class="text-gray-600 font-medium">Branch:</span> {{ $decoded['bank_address'] ?? '' }}</div>
+                                                    @endif
+                                                </div>
+                                            @else
+                                                <span class="text-xs text-gray-500 select-all">{{ $withdrawal->destination }}</span>
+                                            @endif
+                                        </td>
                                         <td class="px-4 py-3 font-semibold text-amber-400">${{ number_format($withdrawal->amount, 2) }}</td>
                                         <td class="px-4 py-3">
                                             <span class="px-2.5 py-0.5 rounded-full text-xs font-medium

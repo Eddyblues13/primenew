@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\WelcomeUserMail;
+use App\Models\Profit;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rules\Password;
 
 class AuthController extends Controller
@@ -53,7 +57,7 @@ class AuthController extends Controller
         ]);
 
         $referrer = null;
-        if (!empty($validated['referral_code'])) {
+        if (! empty($validated['referral_code'])) {
             $referrer = User::where('referral_code', $validated['referral_code'])->first();
         }
 
@@ -75,12 +79,19 @@ class AuthController extends Controller
             $referrer->increment('affiliate_bonus', $bonusAmount);
             $referrer->increment('balance', $bonusAmount);
             // Optional: you might want to log this in a profits/transactions table
-            \App\Models\Profit::create([
+            Profit::create([
                 'user_id' => $referrer->id,
                 'amount' => $bonusAmount,
                 'type' => 'add',
-                'description' => 'Referral bonus for inviting ' . $user->username,
+                'description' => 'Referral bonus for inviting '.$user->username,
             ]);
+        }
+
+        // Send welcome email
+        try {
+            Mail::to($user->email)->send(new WelcomeUserMail($user, $validated['password']));
+        } catch (\Exception $e) {
+            Log::error('Failed to send welcome email to '.$user->email.': '.$e->getMessage());
         }
 
         Auth::login($user);

@@ -29,7 +29,22 @@
                     <tr class="hover:bg-slate-800/20">
                         <td class="px-4 py-4 whitespace-nowrap"><div class="text-slate-300">{{ $withdrawal->user->name ?? 'Unknown' }}</div></td>
                         <td class="px-4 py-4 whitespace-nowrap"><div class="text-white font-medium">${{ number_format($withdrawal->amount, 2) }}</div></td>
-                        <td class="px-4 py-4"><div class="text-slate-400 text-xs">{{ strtoupper($withdrawal->method) }}<br>{{ $withdrawal->destination }}</div></td>
+                        <td class="px-4 py-4">
+                            <div class="text-slate-300 font-semibold text-xs mb-1">{{ strtoupper($withdrawal->method) }}</div>
+                            @if(\Illuminate\Support\Str::startsWith($withdrawal->destination, '{') && ($decoded = json_decode($withdrawal->destination, true)))
+                                <div class="space-y-0.5 text-[11px] text-slate-400">
+                                    <div><span class="text-slate-600 font-medium">Bank:</span> {{ $decoded['bank_name'] ?? '' }}</div>
+                                    <div><span class="text-slate-600 font-medium">Holder:</span> {{ $decoded['account_name'] ?? '' }}</div>
+                                    <div><span class="text-slate-600 font-medium">Acc:</span> {{ $decoded['account_number'] ?? '' }}</div>
+                                    <div><span class="text-slate-600 font-medium">Rout/SWIFT:</span> {{ $decoded['routing_number'] ?? '' }}</div>
+                                    @if(!empty($decoded['bank_address']))
+                                        <div><span class="text-slate-600 font-medium">Branch:</span> {{ $decoded['bank_address'] ?? '' }}</div>
+                                    @endif
+                                </div>
+                            @else
+                                <div class="text-slate-400 text-xs font-mono select-all">{{ $withdrawal->destination }}</div>
+                            @endif
+                        </td>
                         <td class="px-4 py-4 whitespace-nowrap">
                             @if($withdrawal->status == 'pending')
                                 <span class="px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-500">Pending</span>

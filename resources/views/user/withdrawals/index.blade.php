@@ -31,12 +31,20 @@
                         
                         <!-- Amount -->
                         <div>
-                            <label class="block text-sm font-medium text-slate-300 mb-2" for="amount">Amount (USD)</label>
+                            <div class="flex justify-between items-center mb-2">
+                                <label class="block text-sm font-medium text-slate-300" for="amount">Amount (USD)</label>
+                                <span class="text-xs text-slate-400">Available: <span class="text-blue-400 font-semibold cursor-pointer" onclick="fillMaxBalance()">$</span><span class="text-blue-400 font-semibold cursor-pointer" id="available-balance-span" onclick="fillMaxBalance()">{{ number_format($user->balance, 2, '.', '') }}</span></span>
+                            </div>
                             <div class="relative">
                                 <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                     <span class="text-slate-400 font-medium">$</span>
                                 </div>
-                                <input id="amount" name="amount" class="w-full bg-slate-800/50 border border-slate-700 rounded-lg pl-8 pr-4 py-3 text-slate-200 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors" type="number" step="0.01" min="10" placeholder="0.00" required>
+                                <input id="amount" name="amount" class="w-full bg-slate-800/50 border border-slate-700 rounded-lg pl-8 pr-20 py-3 text-slate-200 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors" type="number" step="0.01" min="10" placeholder="0.00" required>
+                                <div class="absolute inset-y-0 right-0 pr-2 flex items-center">
+                                    <button type="button" onclick="fillMaxBalance()" class="bg-blue-600/20 hover:bg-blue-600/30 text-blue-400 text-xs font-semibold py-1 px-2.5 rounded transition-colors border border-blue-500/30">
+                                        MAX
+                                    </button>
+                                </div>
                             </div>
                             @error('amount') <p class="text-red-400 text-xs mt-1">{{ $message }}</p> @enderror
                         </div>
@@ -44,21 +52,66 @@
                         <!-- Method -->
                         <div>
                             <label class="block text-sm font-medium text-slate-300 mb-2" for="method">Withdrawal Method</label>
-                            <select id="method" name="method" class="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-3 text-slate-200 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors" required>
-                                <option value="" disabled selected>Select a method...</option>
+                            <select id="method" name="method" onchange="toggleWithdrawalMethod(this.value)" class="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-3 text-slate-200 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors" required>
+                                <option value="" disabled selected>Select a payment method...</option>
                                 <option value="bitcoin">Bitcoin (BTC)</option>
                                 <option value="ethereum">Ethereum (ETH)</option>
                                 <option value="usdt_trc20">USDT (TRC20)</option>
-                                <option value="bank_transfer">Bank Transfer</option>
+                                <option value="bank_transfer">Direct Bank Wire Transfer</option>
                             </select>
                             @error('method') <p class="text-red-400 text-xs mt-1">{{ $message }}</p> @enderror
                         </div>
 
-                        <!-- Destination -->
-                        <div>
-                            <label class="block text-sm font-medium text-slate-300 mb-2" for="destination">Wallet Address / Account Number</label>
-                            <input id="destination" name="destination" class="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-3 text-slate-200 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors" type="text" placeholder="Enter the destination address" required>
-                            @error('destination') <p class="text-red-400 text-xs mt-1">{{ $message }}</p> @enderror
+                        <!-- Crypto Fields -->
+                        <div id="crypto-fields" class="hidden space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-300 mb-2" id="destination-label" for="destination">Wallet Address</label>
+                                <input id="destination" name="destination" class="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-3 text-slate-200 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors" type="text" placeholder="Enter your crypto wallet address">
+                                <p class="text-xs text-slate-500 mt-2 flex items-center">
+                                    <svg class="w-3.5 h-3.5 mr-1.5 text-amber-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                                    Please verify your wallet address carefully. Transactions are irreversible once processed.
+                                </p>
+                                @error('destination') <p class="text-red-400 text-xs mt-1">{{ $message }}</p> @enderror
+                            </div>
+                        </div>
+
+                        <!-- Bank Transfer Fields -->
+                        <div id="bank-fields" class="hidden space-y-4 bg-slate-800/20 p-5 rounded-xl border border-slate-700/50">
+                            <h3 class="text-sm font-bold text-slate-300 uppercase tracking-wider mb-2">Wire Transfer Details</h3>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-400 uppercase mb-1" for="bank_name">Bank Name</label>
+                                    <input id="bank_name" name="bank_name" class="w-full bg-slate-900/50 border border-slate-700 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors" type="text" placeholder="e.g. JPMorgan Chase Bank">
+                                    @error('bank_name') <p class="text-red-400 text-xs mt-1">{{ $message }}</p> @enderror
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-400 uppercase mb-1" for="account_name">Account Holder Name</label>
+                                    <input id="account_name" name="account_name" value="{{ $user->name }}" class="w-full bg-slate-900/50 border border-slate-700 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors" type="text" placeholder="Full name on account">
+                                    @error('account_name') <p class="text-red-400 text-xs mt-1">{{ $message }}</p> @enderror
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-400 uppercase mb-1" for="account_number">Account Number / IBAN</label>
+                                    <input id="account_number" name="account_number" class="w-full bg-slate-900/50 border border-slate-700 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors" type="text" placeholder="Account Number or IBAN">
+                                    @error('account_number') <p class="text-red-400 text-xs mt-1">{{ $message }}</p> @enderror
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-400 uppercase mb-1" for="routing_number">Routing Number / SWIFT/BIC</label>
+                                    <input id="routing_number" name="routing_number" class="w-full bg-slate-900/50 border border-slate-700 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors" type="text" placeholder="Routing or SWIFT Code">
+                                    @error('routing_number') <p class="text-red-400 text-xs mt-1">{{ $message }}</p> @enderror
+                                </div>
+                            </div>
+
+                            <div class="mt-2">
+                                <label class="block text-xs font-semibold text-slate-400 uppercase mb-1" for="bank_address">Bank Branch Address (Optional)</label>
+                                <textarea id="bank_address" name="bank_address" rows="2" class="w-full bg-slate-900/50 border border-slate-700 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors resize-none" placeholder="Enter bank address or branch details"></textarea>
+                                @error('bank_address') <p class="text-red-400 text-xs mt-1">{{ $message }}</p> @enderror
+                            </div>
                         </div>
 
                     </div>
@@ -109,4 +162,70 @@
 
     </div>
 </div>
+
+<script>
+    function fillMaxBalance() {
+        const balance = document.getElementById('available-balance-span').innerText;
+        document.getElementById('amount').value = balance;
+    }
+
+    function toggleWithdrawalMethod(method) {
+        const cryptoFields = document.getElementById('crypto-fields');
+        const bankFields = document.getElementById('bank-fields');
+        const destinationInput = document.getElementById('destination');
+        const destinationLabel = document.getElementById('destination-label');
+        
+        const bankNameInput = document.getElementById('bank_name');
+        const accountNameInput = document.getElementById('account_name');
+        const accountNumberInput = document.getElementById('account_number');
+        const routingNumberInput = document.getElementById('routing_number');
+
+        // Reset requirements
+        destinationInput.required = false;
+        bankNameInput.required = false;
+        accountNameInput.required = false;
+        accountNumberInput.required = false;
+        routingNumberInput.required = false;
+
+        if (method === 'bank_transfer') {
+            cryptoFields.classList.add('hidden');
+            bankFields.classList.remove('hidden');
+            
+            // Set requirements
+            bankNameInput.required = true;
+            accountNameInput.required = true;
+            accountNumberInput.required = true;
+            routingNumberInput.required = true;
+        } else {
+            bankFields.classList.add('hidden');
+            cryptoFields.classList.remove('hidden');
+            
+            // Set requirements
+            destinationInput.required = true;
+            
+            // Customize label & placeholder based on crypto coin
+            if (method === 'bitcoin') {
+                destinationLabel.innerText = 'Bitcoin (BTC) Wallet Address';
+                destinationInput.placeholder = 'e.g. 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa';
+            } else if (method === 'ethereum') {
+                destinationLabel.innerText = 'Ethereum (ETH) Wallet Address';
+                destinationInput.placeholder = 'e.g. 0x71C7656EC7ab88b098defB751B7401B5f6d8976F';
+            } else if (method === 'usdt_trc20') {
+                destinationLabel.innerText = 'USDT (TRC20) Wallet Address';
+                destinationInput.placeholder = 'e.g. TXxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
+            } else {
+                destinationLabel.innerText = 'Wallet Address';
+                destinationInput.placeholder = 'Enter your wallet address';
+            }
+        }
+    }
+    
+    // Automatically trigger on page load if validation errors occurred
+    document.addEventListener('DOMContentLoaded', function() {
+        const methodSelect = document.getElementById('method');
+        if (methodSelect.value) {
+            toggleWithdrawalMethod(methodSelect.value);
+        }
+    });
+</script>
 @endsection
