@@ -43,7 +43,7 @@
 
                 <button @click="profitModalOpen = true; actionsOpen = false" class="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-gray-300 hover:text-white hover:bg-dark-700 transition-colors">
                     <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
-                    Update Profit
+                    Update Profit & Capital
                 </button>
 
                 <button @click="bonusModalOpen = true; actionsOpen = false" class="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-gray-300 hover:text-white hover:bg-dark-700 transition-colors">
@@ -444,7 +444,7 @@
             <div x-show="profitModalOpen" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100" x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100" x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" class="inline-block align-bottom glass-panel border border-dark-600 rounded-2xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full">
                 
                 <div class="px-6 py-6 border-b border-dark-600 flex items-center justify-between">
-                    <h3 class="text-xl leading-6 font-semibold text-white" id="modal-title-profit">Update Profit</h3>
+                    <h3 class="text-xl leading-6 font-semibold text-white" id="modal-title-profit">Update Profit & Capital</h3>
                     <button @click="profitModalOpen = false" class="text-gray-400 hover:text-white transition-colors">
                         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
                     </button>
