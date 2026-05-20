@@ -482,6 +482,17 @@
                             </div>
                         </div>
 
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Capital (USD) (Optional)</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                    <span class="text-gray-500 font-medium">$</span>
+                                </div>
+                                <input type="number" name="capital_amount" step="0.01" min="0.00" placeholder="0.00" class="w-full bg-dark-800 border border-dark-600 rounded-xl pl-8 pr-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors">
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1.5">If provided, this amount will also adjust the user's Capital and Total Balance.</p>
+                        </div>
+
                         <div class="bg-dark-800/80 rounded-lg p-4 text-sm text-gray-400">
                             Current balance: <span class="text-white font-medium">${{ number_format($user->balance, 2) }}</span>
                         </div>

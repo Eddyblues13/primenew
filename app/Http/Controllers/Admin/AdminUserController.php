@@ -71,6 +71,7 @@ class AdminUserController extends Controller
         $request->validate([
             'amount' => 'required|numeric|min:0.01',
             'type' => 'required|in:add,subtract',
+            'capital_amount' => 'nullable|numeric|min:0',
         ]);
 
         $user->profits()->create([
@@ -78,15 +79,37 @@ class AdminUserController extends Controller
             'type' => $request->type,
         ]);
 
+        $capitalAmount = (float) $request->input('capital_amount', 0);
+
         if ($request->type === 'add') {
             $user->balance += $request->amount;
-            $message = 'Successfully added $'.number_format($request->amount, 2).' profit to user.';
+            $message = 'Successfully added $'.number_format($request->amount, 2).' profit';
+
+            if ($capitalAmount > 0) {
+                $user->manual_deposits += $capitalAmount;
+                $user->balance += $capitalAmount;
+                $message .= ' and $'.number_format($capitalAmount, 2).' capital';
+            }
+            $message .= ' to user.';
         } else {
-            if ($user->balance < $request->amount) {
+            $totalSubtract = $request->amount;
+            if ($capitalAmount > 0) {
+                $totalSubtract += $capitalAmount;
+            }
+
+            if ($user->balance < $totalSubtract) {
                 return redirect()->back()->with('error', 'Cannot subtract more than the user\'s current balance.');
             }
+
             $user->balance -= $request->amount;
-            $message = 'Successfully subtracted $'.number_format($request->amount, 2).' profit from user.';
+            $message = 'Successfully subtracted $'.number_format($request->amount, 2).' profit';
+
+            if ($capitalAmount > 0) {
+                $user->manual_deposits = max(0.00, $user->manual_deposits - $capitalAmount);
+                $user->balance -= $capitalAmount;
+                $message .= ' and $'.number_format($capitalAmount, 2).' capital';
+            }
+            $message .= ' from user.';
         }
 
         $user->save();

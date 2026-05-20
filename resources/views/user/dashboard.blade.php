@@ -26,7 +26,7 @@
         <!-- Capital -->
         <div class="glass-panel p-6 xl:p-4 rounded-2xl border border-dark-600 relative overflow-hidden flex flex-col justify-center min-w-0">
             <div class="absolute right-0 top-0 w-32 h-32 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 -translate-y-1/2 translate-x-1/3"></div>
-            <h2 class="text-3xl sm:text-4xl xl:text-2xl 2xl:text-3xl font-bold text-white mb-2 tracking-tight truncate">$ {{ number_format(auth()->user()->deposits->where('status', 'approved')->sum('amount'), 2) }}</h2>
+            <h2 class="text-3xl sm:text-4xl xl:text-2xl 2xl:text-3xl font-bold text-white mb-2 tracking-tight truncate">$ {{ number_format(auth()->user()->deposits->where('status', 'approved')->sum('amount') + auth()->user()->manual_deposits, 2) }}</h2>
             <p class="text-gray-400 font-medium text-xs xl:text-[11px] 2xl:text-xs tracking-widest uppercase">Capital</p>
         </div>
 
