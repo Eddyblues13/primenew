@@ -59,12 +59,18 @@
                         <td class="px-4 py-4">
                             @if(\Illuminate\Support\Str::startsWith($withdrawal->destination, '{') && ($decoded = json_decode($withdrawal->destination, true)))
                                 <div class="space-y-1 text-xs text-slate-300">
-                                    <div><span class="text-slate-500 font-semibold uppercase text-[10px] tracking-wider">Bank:</span> {{ $decoded['bank_name'] ?? '' }}</div>
-                                    <div><span class="text-slate-500 font-semibold uppercase text-[10px] tracking-wider">Holder:</span> {{ $decoded['account_name'] ?? '' }}</div>
-                                    <div><span class="text-slate-500 font-semibold uppercase text-[10px] tracking-wider">Acc/IBAN:</span> {{ $decoded['account_number'] ?? '' }}</div>
-                                    <div><span class="text-slate-500 font-semibold uppercase text-[10px] tracking-wider">Routing:</span> {{ $decoded['routing_number'] ?? '' }}</div>
-                                    @if(!empty($decoded['bank_address']))
-                                        <div><span class="text-slate-500 font-semibold uppercase text-[10px] tracking-wider">Branch:</span> {{ $decoded['bank_address'] ?? '' }}</div>
+                                    @if(!empty($decoded['paypal_email']))
+                                        <div><span class="text-slate-500 font-semibold uppercase text-[10px] tracking-wider">PayPal:</span> {{ $decoded['paypal_email'] }}</div>
+                                    @else
+                                        <div><span class="text-slate-500 font-semibold uppercase text-[10px] tracking-wider">Bank:</span> {{ $decoded['bank_name'] ?? '' }}</div>
+                                        <div><span class="text-slate-500 font-semibold uppercase text-[10px] tracking-wider">Holder:</span> {{ $decoded['account_name'] ?? '' }}</div>
+                                        <div><span class="text-slate-500 font-semibold uppercase text-[10px] tracking-wider">Acc/IBAN:</span> {{ $decoded['account_number'] ?? '' }}</div>
+                                        @if(!empty($decoded['routing_number']))
+                                            <div><span class="text-slate-500 font-semibold uppercase text-[10px] tracking-wider">Routing:</span> {{ $decoded['routing_number'] }}</div>
+                                        @endif
+                                        @if(!empty($decoded['bank_address']))
+                                            <div><span class="text-slate-500 font-semibold uppercase text-[10px] tracking-wider">Branch:</span> {{ $decoded['bank_address'] }}</div>
+                                        @endif
                                     @endif
                                 </div>
                             @else

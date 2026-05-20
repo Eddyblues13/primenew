@@ -58,6 +58,7 @@
                                 <option value="ethereum">Ethereum (ETH)</option>
                                 <option value="usdt_trc20">USDT (TRC20)</option>
                                 <option value="bank_transfer">Direct Bank Wire Transfer</option>
+                                <option value="paypal">PayPal</option>
                             </select>
                             @error('method') <p class="text-red-400 text-xs mt-1">{{ $message }}</p> @enderror
                         </div>
@@ -101,7 +102,7 @@
                                 </div>
                                 
                                 <div>
-                                    <label class="block text-xs font-semibold text-slate-400 uppercase mb-1" for="routing_number">Routing Number / SWIFT/BIC</label>
+                                    <label class="block text-xs font-semibold text-slate-400 uppercase mb-1" for="routing_number">Routing Number / SWIFT/BIC (Optional)</label>
                                     <input id="routing_number" name="routing_number" class="w-full bg-slate-900/50 border border-slate-700 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors" type="text" placeholder="Routing or SWIFT Code">
                                     @error('routing_number') <p class="text-red-400 text-xs mt-1">{{ $message }}</p> @enderror
                                 </div>
@@ -111,6 +112,20 @@
                                 <label class="block text-xs font-semibold text-slate-400 uppercase mb-1" for="bank_address">Bank Branch Address (Optional)</label>
                                 <textarea id="bank_address" name="bank_address" rows="2" class="w-full bg-slate-900/50 border border-slate-700 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors resize-none" placeholder="Enter bank address or branch details"></textarea>
                                 @error('bank_address') <p class="text-red-400 text-xs mt-1">{{ $message }}</p> @enderror
+                            </div>
+                        </div>
+
+                        <!-- PayPal Fields -->
+                        <div id="paypal-fields" class="hidden space-y-4 bg-slate-800/20 p-5 rounded-xl border border-slate-700/50">
+                            <h3 class="text-sm font-bold text-slate-300 uppercase tracking-wider mb-2">PayPal Details</h3>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-400 uppercase mb-1" for="paypal_email">PayPal Email Address</label>
+                                <input id="paypal_email" name="paypal_email" class="w-full bg-slate-900/50 border border-slate-700 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors" type="email" placeholder="e.g. youremail@example.com">
+                                <p class="text-xs text-slate-500 mt-2 flex items-center">
+                                    <svg class="w-3.5 h-3.5 mr-1.5 text-amber-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                                    Please ensure this is the email linked to your verified PayPal account.
+                                </p>
+                                @error('paypal_email') <p class="text-red-400 text-xs mt-1">{{ $message }}</p> @enderror
                             </div>
                         </div>
 
@@ -172,38 +187,38 @@
     function toggleWithdrawalMethod(method) {
         const cryptoFields = document.getElementById('crypto-fields');
         const bankFields = document.getElementById('bank-fields');
+        const paypalFields = document.getElementById('paypal-fields');
         const destinationInput = document.getElementById('destination');
         const destinationLabel = document.getElementById('destination-label');
         
         const bankNameInput = document.getElementById('bank_name');
         const accountNameInput = document.getElementById('account_name');
         const accountNumberInput = document.getElementById('account_number');
-        const routingNumberInput = document.getElementById('routing_number');
+        const paypalEmailInput = document.getElementById('paypal_email');
 
-        // Reset requirements
+        // Reset requirements and hide all
         destinationInput.required = false;
         bankNameInput.required = false;
         accountNameInput.required = false;
         accountNumberInput.required = false;
-        routingNumberInput.required = false;
+        paypalEmailInput.required = false;
+
+        cryptoFields.classList.add('hidden');
+        bankFields.classList.add('hidden');
+        paypalFields.classList.add('hidden');
 
         if (method === 'bank_transfer') {
-            cryptoFields.classList.add('hidden');
             bankFields.classList.remove('hidden');
-            
-            // Set requirements
             bankNameInput.required = true;
             accountNameInput.required = true;
             accountNumberInput.required = true;
-            routingNumberInput.required = true;
+        } else if (method === 'paypal') {
+            paypalFields.classList.remove('hidden');
+            paypalEmailInput.required = true;
         } else {
-            bankFields.classList.add('hidden');
             cryptoFields.classList.remove('hidden');
-            
-            // Set requirements
             destinationInput.required = true;
             
-            // Customize label & placeholder based on crypto coin
             if (method === 'bitcoin') {
                 destinationLabel.innerText = 'Bitcoin (BTC) Wallet Address';
                 destinationInput.placeholder = 'e.g. 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa';

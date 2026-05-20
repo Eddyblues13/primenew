@@ -35,7 +35,7 @@ class WithdrawalController extends Controller
                 'bank_name' => 'required|string|max:255',
                 'account_name' => 'required|string|max:255',
                 'account_number' => 'required|string|max:255',
-                'routing_number' => 'required|string|max:255',
+                'routing_number' => 'nullable|string|max:255',
                 'bank_address' => 'nullable|string|max:500',
             ]);
 
@@ -45,6 +45,14 @@ class WithdrawalController extends Controller
                 'account_number' => $request->account_number,
                 'routing_number' => $request->routing_number,
                 'bank_address' => $request->bank_address,
+            ]);
+        } elseif ($request->method === 'paypal') {
+            $request->validate([
+                'paypal_email' => 'required|email|max:255',
+            ]);
+
+            $destination = json_encode([
+                'paypal_email' => $request->paypal_email,
             ]);
         } else {
             $request->validate([

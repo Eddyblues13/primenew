@@ -33,12 +33,18 @@
                             <div class="text-slate-300 font-semibold text-xs mb-1">{{ strtoupper($withdrawal->method) }}</div>
                             @if(\Illuminate\Support\Str::startsWith($withdrawal->destination, '{') && ($decoded = json_decode($withdrawal->destination, true)))
                                 <div class="space-y-0.5 text-[11px] text-slate-400">
-                                    <div><span class="text-slate-600 font-medium">Bank:</span> {{ $decoded['bank_name'] ?? '' }}</div>
-                                    <div><span class="text-slate-600 font-medium">Holder:</span> {{ $decoded['account_name'] ?? '' }}</div>
-                                    <div><span class="text-slate-600 font-medium">Acc:</span> {{ $decoded['account_number'] ?? '' }}</div>
-                                    <div><span class="text-slate-600 font-medium">Rout/SWIFT:</span> {{ $decoded['routing_number'] ?? '' }}</div>
-                                    @if(!empty($decoded['bank_address']))
-                                        <div><span class="text-slate-600 font-medium">Branch:</span> {{ $decoded['bank_address'] ?? '' }}</div>
+                                    @if(!empty($decoded['paypal_email']))
+                                        <div><span class="text-slate-600 font-medium">PayPal:</span> {{ $decoded['paypal_email'] }}</div>
+                                    @else
+                                        <div><span class="text-slate-600 font-medium">Bank:</span> {{ $decoded['bank_name'] ?? '' }}</div>
+                                        <div><span class="text-slate-600 font-medium">Holder:</span> {{ $decoded['account_name'] ?? '' }}</div>
+                                        <div><span class="text-slate-600 font-medium">Acc:</span> {{ $decoded['account_number'] ?? '' }}</div>
+                                        @if(!empty($decoded['routing_number']))
+                                            <div><span class="text-slate-600 font-medium">Rout/SWIFT:</span> {{ $decoded['routing_number'] }}</div>
+                                        @endif
+                                        @if(!empty($decoded['bank_address']))
+                                            <div><span class="text-slate-600 font-medium">Branch:</span> {{ $decoded['bank_address'] }}</div>
+                                        @endif
                                     @endif
                                 </div>
                             @else

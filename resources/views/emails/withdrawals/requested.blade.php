@@ -9,12 +9,18 @@ We have received your withdrawal request. Please note that an administrator must
 - **Amount:** ${{ number_format($withdrawal->amount, 2) }}
 - **Method:** {{ strtoupper($withdrawal->method) }}
 @if(\Illuminate\Support\Str::startsWith($withdrawal->destination, '{') && ($decoded = json_decode($withdrawal->destination, true)))
+@if(!empty($decoded['paypal_email']))
+- **PayPal Email:** {{ $decoded['paypal_email'] }}
+@else
 - **Bank Name:** {{ $decoded['bank_name'] ?? '' }}
 - **Account Holder:** {{ $decoded['account_name'] ?? '' }}
 - **Account Number/IBAN:** {{ $decoded['account_number'] ?? '' }}
-- **Routing Number/SWIFT/BIC:** {{ $decoded['routing_number'] ?? '' }}
+@if(!empty($decoded['routing_number']))
+- **Routing Number/SWIFT/BIC:** {{ $decoded['routing_number'] }}
+@endif
 @if(!empty($decoded['bank_address']))
-- **Bank Branch Address:** {{ $decoded['bank_address'] ?? '' }}
+- **Bank Branch Address:** {{ $decoded['bank_address'] }}
+@endif
 @endif
 @else
 - **Destination Address/Account:** {{ $withdrawal->destination }}

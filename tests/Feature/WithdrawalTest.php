@@ -115,7 +115,7 @@ test('bank transfer withdrawal requires all mandatory bank fields', function () 
         // missing bank details
     ]);
 
-    $response->assertSessionHasErrors(['bank_name', 'account_name', 'account_number', 'routing_number']);
+    $response->assertSessionHasErrors(['bank_name', 'account_name', 'account_number']);
     $this->assertEquals(500.00, $user->fresh()->balance);
 });
 
@@ -160,4 +160,82 @@ test('withdrawal request email renders bank wire details correctly', function ()
     $mailable->assertSeeInHtml('9876543210');
     $mailable->assertSeeInHtml('123456789');
     $mailable->assertSeeInHtml('456 Main St, VA');
+});
+
+test('a user can request a paypal withdrawal successfully', function () {
+    Mail::fake();
+
+    $user = User::factory()->create([
+        'balance' => 500.00,
+    ]);
+
+    $this->actingAs($user);
+
+    $response = $this->post(route('withdrawals.store'), [
+        'amount' => 150.00,
+        'method' => 'paypal',
+        'paypal_email' => 'user@paypal.com',
+    ]);
+
+    $response->assertRedirect(route('withdrawals.history'));
+    $response->assertSessionHas('success', 'Withdrawal request submitted successfully.');
+
+    $this->assertEquals(350.00, $user->fresh()->balance);
+
+    $withdrawal = Withdrawal::latest()->first();
+    $this->assertNotNull($withdrawal);
+    $this->assertEquals('paypal', $withdrawal->method);
+
+    $decoded = json_decode($withdrawal->destination, true);
+    $this->assertNotNull($decoded);
+    $this->assertEquals('user@paypal.com', $decoded['paypal_email']);
+
+    Mail::assertSent(WithdrawalRequestedMail::class, function (WithdrawalRequestedMail $mail) use ($user) {
+        return $mail->hasTo($user->email) &&
+               $mail->withdrawal->method === 'paypal';
+    });
+});
+
+test('paypal withdrawal requires a valid email', function () {
+    $user = User::factory()->create([
+        'balance' => 500.00,
+    ]);
+
+    $this->actingAs($user);
+
+    $response = $this->post(route('withdrawals.store'), [
+        'amount' => 100.00,
+        'method' => 'paypal',
+        // missing paypal_email
+    ]);
+
+    $response->assertSessionHasErrors(['paypal_email']);
+    $this->assertEquals(500.00, $user->fresh()->balance);
+});
+
+test('bank transfer withdrawal works without routing number', function () {
+    Mail::fake();
+
+    $user = User::factory()->create([
+        'balance' => 1000.00,
+    ]);
+
+    $this->actingAs($user);
+
+    $response = $this->post(route('withdrawals.store'), [
+        'amount' => 200.00,
+        'method' => 'bank_transfer',
+        'bank_name' => 'Test Bank',
+        'account_name' => 'John Doe',
+        'account_number' => '999888777',
+        // no routing_number
+    ]);
+
+    $response->assertRedirect(route('withdrawals.history'));
+    $this->assertEquals(800.00, $user->fresh()->balance);
+
+    $withdrawal = Withdrawal::latest()->first();
+    $decoded = json_decode($withdrawal->destination, true);
+    $this->assertEquals('Test Bank', $decoded['bank_name']);
+    $this->assertNull($decoded['routing_number']);
 });
