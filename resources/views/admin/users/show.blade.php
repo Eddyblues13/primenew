@@ -7,6 +7,7 @@
 <div x-data="{ 
         balanceModalOpen: false, 
         profitModalOpen: false,
+        capitalModalOpen: false,
         mailModalOpen: false,
         bonusModalOpen: false,
         amountsModalOpen: false,
@@ -43,7 +44,12 @@
 
                 <button @click="profitModalOpen = true; actionsOpen = false" class="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-gray-300 hover:text-white hover:bg-dark-700 transition-colors">
                     <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
-                    Update Profit & Capital
+                    Update Profit
+                </button>
+
+                <button @click="capitalModalOpen = true; actionsOpen = false" class="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-gray-300 hover:text-white hover:bg-dark-700 transition-colors">
+                    <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                    Update Capital
                 </button>
 
                 <button @click="bonusModalOpen = true; actionsOpen = false" class="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-gray-300 hover:text-white hover:bg-dark-700 transition-colors">
@@ -444,7 +450,7 @@
             <div x-show="profitModalOpen" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100" x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100" x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" class="inline-block align-bottom glass-panel border border-dark-600 rounded-2xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full">
                 
                 <div class="px-6 py-6 border-b border-dark-600 flex items-center justify-between">
-                    <h3 class="text-xl leading-6 font-semibold text-white" id="modal-title-profit">Update Profit & Capital</h3>
+                    <h3 class="text-xl leading-6 font-semibold text-white" id="modal-title-profit">Update Profit</h3>
                     <button @click="profitModalOpen = false" class="text-gray-400 hover:text-white transition-colors">
                         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
                     </button>
@@ -482,17 +488,6 @@
                             </div>
                         </div>
 
-                        <div>
-                            <label class="block text-sm font-medium text-gray-300 mb-2">Capital (USD) (Optional)</label>
-                            <div class="relative">
-                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                    <span class="text-gray-500 font-medium">$</span>
-                                </div>
-                                <input type="number" name="capital_amount" step="0.01" min="0.00" placeholder="0.00" class="w-full bg-dark-800 border border-dark-600 rounded-xl pl-8 pr-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors">
-                            </div>
-                            <p class="text-xs text-gray-500 mt-1.5">If provided, this amount will also adjust the user's Capital and Total Balance.</p>
-                        </div>
-
                         <div class="bg-dark-800/80 rounded-lg p-4 text-sm text-gray-400">
                             Current balance: <span class="text-white font-medium">${{ number_format($user->balance, 2) }}</span>
                         </div>
@@ -501,6 +496,70 @@
                     <div class="px-6 py-4 border-t border-dark-600 flex justify-end gap-3 bg-dark-800/30">
                         <button type="button" @click="profitModalOpen = false" class="px-4 py-2 bg-dark-700 text-white rounded-lg font-medium hover:bg-dark-600 transition-colors">Cancel</button>
                         <button type="submit" class="px-6 py-2 bg-brand-500 text-white rounded-lg font-medium hover:bg-brand-400 transition-colors shadow-lg shadow-brand-500/20">Confirm</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Update Capital Modal -->
+    <div x-show="capitalModalOpen" class="fixed inset-0 z-50 overflow-y-auto" style="display: none;" aria-labelledby="modal-title-capital" role="dialog" aria-modal="true">
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            
+            <div x-show="capitalModalOpen" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="fixed inset-0 bg-black/70 backdrop-blur-sm transition-opacity" aria-hidden="true" @click="capitalModalOpen = false"></div>
+
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
+            <div x-show="capitalModalOpen" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100" x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100" x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" class="inline-block align-bottom glass-panel border border-dark-600 rounded-2xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full">
+                
+                <div class="px-6 py-6 border-b border-dark-600 flex items-center justify-between">
+                    <h3 class="text-xl leading-6 font-semibold text-white" id="modal-title-capital">Update Capital</h3>
+                    <button @click="capitalModalOpen = false" class="text-gray-400 hover:text-white transition-colors">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                    </button>
+                </div>
+                
+                <form action="{{ route('admin.users.capital', $user) }}" method="POST">
+                    @csrf
+                    <div class="px-6 py-6 space-y-5">
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Action</label>
+                            <div class="grid grid-cols-2 gap-4">
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="type" value="add" class="peer sr-only" checked>
+                                    <div class="rounded-lg border border-dark-600 px-4 py-3 text-center hover:bg-dark-700 peer-checked:bg-blue-500/10 peer-checked:border-blue-500 peer-checked:text-blue-400 transition-colors">
+                                        <span class="block text-sm font-medium text-gray-300 peer-checked:text-blue-400">Add Capital</span>
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="type" value="subtract" class="peer sr-only">
+                                    <div class="rounded-lg border border-dark-600 px-4 py-3 text-center hover:bg-dark-700 peer-checked:bg-red-500/10 peer-checked:border-red-500 peer-checked:text-red-400 transition-colors">
+                                        <span class="block text-sm font-medium text-gray-300 peer-checked:text-red-400">Deduct Capital</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Amount (USD)</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                    <span class="text-gray-500 font-medium">$</span>
+                                </div>
+                                <input type="number" name="amount" step="0.01" min="0.01" placeholder="0.00" class="w-full bg-dark-800 border border-dark-600 rounded-xl pl-8 pr-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors" required>
+                            </div>
+                        </div>
+
+                        <div class="bg-dark-800/80 rounded-lg p-4 space-y-1">
+                            <div class="text-sm text-gray-400">Current balance: <span class="text-white font-medium">${{ number_format($user->balance, 2) }}</span></div>
+                            <div class="text-sm text-gray-400">Current capital: <span class="text-white font-medium">${{ number_format($user->deposits->where('status', 'approved')->sum('amount') + $user->manual_deposits, 2) }}</span></div>
+                        </div>
+                    </div>
+                    
+                    <div class="px-6 py-4 border-t border-dark-600 flex justify-end gap-3 bg-dark-800/30">
+                        <button type="button" @click="capitalModalOpen = false" class="px-4 py-2 bg-dark-700 text-white rounded-lg font-medium hover:bg-dark-600 transition-colors">Cancel</button>
+                        <button type="submit" class="px-6 py-2 bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-400 transition-colors shadow-lg shadow-blue-500/20">Confirm</button>
                     </div>
                 </form>
             </div>

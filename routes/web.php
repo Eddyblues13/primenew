@@ -20,6 +20,7 @@ use App\Http\Controllers\KycController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\WithdrawalController;
 use App\Models\InvestmentPlan;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -27,7 +28,7 @@ Route::get('/', function () {
     $cryptoPlans = InvestmentPlan::where('type', 'crypto')->get();
 
     // Fetch live news from CoinTelegraph RSS feed (Free, no rate limits)
-    $liveNews = Illuminate\Support\Facades\Cache::remember('homepage_live_news_rss', 3600, function () {
+    $liveNews = Cache::remember('homepage_live_news_rss', 3600, function () {
         try {
             $rssContent = @file_get_contents('https://cointelegraph.com/rss');
             if ($rssContent) {
@@ -37,41 +38,49 @@ Route::get('/', function () {
                     $items = $xml->channel->item;
                     $count = 0;
                     foreach ($items as $item) {
-                        if ($count >= 6) break;
-                        
+                        if ($count >= 6) {
+                            break;
+                        }
+
                         $image = '';
                         $namespaces = $xml->getNamespaces(true);
                         if (isset($namespaces['media'])) {
                             $media = $item->children($namespaces['media']);
                             if (isset($media->content)) {
                                 foreach ($media->content->attributes() as $k => $v) {
-                                    if ($k == 'url') $image = (string)$v;
+                                    if ($k == 'url') {
+                                        $image = (string) $v;
+                                    }
                                 }
                             }
                         }
-                        
+
                         if (empty($image) && isset($item->enclosure)) {
                             foreach ($item->enclosure->attributes() as $k => $v) {
-                                if ($k == 'url') $image = (string)$v;
+                                if ($k == 'url') {
+                                    $image = (string) $v;
+                                }
                             }
                         }
 
                         $news[] = [
-                            'title' => (string)$item->title,
-                            'url' => (string)$item->link,
+                            'title' => (string) $item->title,
+                            'url' => (string) $item->link,
                             'source_info' => ['name' => 'CoinTelegraph'],
-                            'published_on' => strtotime((string)$item->pubDate),
+                            'published_on' => strtotime((string) $item->pubDate),
                             'imageurl' => $image,
-                            'body' => strip_tags((string)$item->description)
+                            'body' => strip_tags((string) $item->description),
                         ];
                         $count++;
                     }
+
                     return $news;
                 }
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // Silently fail and return empty array if RSS is down
         }
+
         return [];
     });
 
@@ -84,7 +93,7 @@ Route::get('/', function () {
         3 => 'Tesla Model X Long Range',
         4 => 'Tesla Model Y Dual Motor',
         5 => 'Cybertruck Tri-Motor',
-        7 => 'Tesla Roadster SpaceX'
+        7 => 'Tesla Roadster SpaceX',
     ];
     $carSpecs = [
         1 => ['range' => 396, 'zero_to_sixty' => 1.99, 'top_speed' => 200, 'price' => 89990],
@@ -92,30 +101,37 @@ Route::get('/', function () {
         3 => ['range' => 348, 'zero_to_sixty' => 3.8, 'top_speed' => 149, 'price' => 98490],
         4 => ['range' => 330, 'zero_to_sixty' => 4.8, 'top_speed' => 135, 'price' => 47990],
         5 => ['range' => 500, 'zero_to_sixty' => 2.9, 'top_speed' => 130, 'price' => 69900],
-        7 => ['range' => 620, 'zero_to_sixty' => 1.9, 'top_speed' => 250, 'price' => 200000]
+        7 => ['range' => 620, 'zero_to_sixty' => 1.9, 'top_speed' => 250, 'price' => 200000],
     ];
 
     foreach ($carFolders as $folder) {
         $path = public_path("cars/cars/{$folder}");
         $image = 'images/logo.png';
         if (file_exists($path)) {
-            $files = array_values(array_filter(scandir($path), function($f) {
-                return !in_array($f, ['.', '..']);
+            $files = array_values(array_filter(scandir($path), function ($f) {
+                return ! in_array($f, ['.', '..']);
             }));
-            if (!empty($files)) {
-                $image = "cars/cars/{$folder}/" . $files[0];
+            if (! empty($files)) {
+                $image = "cars/cars/{$folder}/".$files[0];
             }
         }
-        
-        $featuredCars[] = new class($carNames[$folder], $carSpecs[$folder], $image) {
+
+        $featuredCars[] = new class($carNames[$folder], $carSpecs[$folder], $image)
+        {
             public $name;
+
             public $range_miles;
+
             public $zero_to_sixty;
+
             public $top_speed_mph;
+
             public $price;
+
             private $image;
 
-            public function __construct($name, $specs, $image) {
+            public function __construct($name, $specs, $image)
+            {
                 $this->name = $name;
                 $this->range_miles = $specs['range'];
                 $this->zero_to_sixty = $specs['zero_to_sixty'];
@@ -124,7 +140,8 @@ Route::get('/', function () {
                 $this->image = $image;
             }
 
-            public function getPrimaryImage() {
+            public function getPrimaryImage()
+            {
                 return $this->image;
             }
         };
@@ -186,6 +203,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::delete('/users/{user}', [AdminUserController::class, 'destroy'])->name('users.destroy');
         Route::post('/users/{user}/balance', [AdminUserController::class, 'updateBalance'])->name('users.balance');
         Route::post('/users/{user}/profit', [AdminUserController::class, 'updateProfit'])->name('users.profit');
+        Route::post('/users/{user}/capital', [AdminUserController::class, 'updateCapital'])->name('users.capital');
         Route::post('/users/{user}/login-as', [AdminUserController::class, 'loginAs'])->name('users.loginAs');
         Route::post('/users/{user}/mail', [AdminUserController::class, 'sendMail'])->name('users.mail');
         Route::post('/users/{user}/bonus', [AdminUserController::class, 'updateBonus'])->name('users.bonus');
